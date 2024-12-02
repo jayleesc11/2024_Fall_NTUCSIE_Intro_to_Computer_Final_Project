@@ -1,27 +1,50 @@
 class Gate {
     // Gate types
-    field int type; // {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
+    field int type; // Gate type {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
+    field int input_rand; // Input 2 (random) {0:0 1:1}
     // Position on the screen
     field int xPos;
     field int yPos;
+    field int xVel;
     // Internal clocks
     field int tick;
 
-    constructor Gate new(int itype) {
-        
+    constructor Gate new(int x, int y) {
+        do reset(x, y);
         return this;
     }
 
-    method void reset() {}
+    method void reset(int x, int y) {
+        let xPos = x;
+        let yPos = y;
+        let type = LCGRandom.randRange(1,6);
+        let input_rand = LCGRandom.randRange(1,2);
+        return;
+    }
 
     method void dispose() {
         do Memory.deAlloc(this);
         return;
     }
 
-    method boolean output(boolean input) {}
+    method boolean output(boolean input_stat) {
+        if (type = 1) {let output = imput_stat & input_rand;} else { 
+        if (type = 2) {let output = ~(imput_stat & input_rand);} else { 
+        if (type = 3) {let output = imput_stat | input_rand;} else { 
+        if (type = 4) {let output = ~(imput_stat | input_rand);} else { 
+        if (type = 5) {let output = (imput_stat & ~input_rand) | (~imput_stat & input_rand);} else { 
+        if (type = 6) {let output = (imput_stat & input_rand) | (~imput_stat & ~input_rand);} else { 
+        let output = 0;}}}}}}
+    }
 
-    method void tick() {}
+    method void tick() {
+        let tick = tick + 1;
+        if (xPos < (-50)) {
+            do dispose();
+        } else {
+            xPos = xPos - xVel;
+        }
+    }
 
     method void draw() {}
 
