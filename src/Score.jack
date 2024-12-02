@@ -1,0 +1,21 @@
+class Score {
+    field int total;
+
+    constructor Score new() {
+        do reset();
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void show() {}
+
+    method void increment() {}
+
+    method void reset() {
+        let total = 0;
+        return;
+    }

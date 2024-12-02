@@ -1,0 +1,19 @@
+class Game {
+    // objects
+    field Player player;
+    field Obstacle obs1;
+    field Obstacle obs2;
+    // internal states
+    field char key;
+    field boolean exit;
+    field boolean reset;
+    field boolean quit;
+    field int collision
+    // random number seed
+    field int seed;
+
+    constructor Game new() {
+        
+        return this;
+    }
+}

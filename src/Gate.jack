@@ -1,0 +1,33 @@
+class Gate {
+    // Gate types
+    field int type;
+    // Position on the screen
+    field int xPos;
+    field int yPos;
+    // Internal clocks
+    field int tick;
+
+    constructor Gate new(int itype) {
+        
+        return this;
+    }
+
+    method void reset() {}
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method boolean output(boolean input) {}
+
+    method void tick() {}
+
+    method void draw() {}
+
+    method void update() {
+        do tick();
+        do draw();
+        return;
+    }
+}

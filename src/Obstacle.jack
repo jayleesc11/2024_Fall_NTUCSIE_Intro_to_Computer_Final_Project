@@ -1,0 +1,49 @@
+class Obstacle {
+    // Gates Library
+    static Array gateLibrary;
+    // Constants
+    static int xVel;
+    static int yGap;
+
+    // Position on the screen
+    field int xPos;
+    field int yPos;
+    // Internal clocks
+    field int tick;
+    // Logic gates
+    field Array gates;
+
+    function void init(int ixVel, int iyGap) {
+        let xVel = ixVel;
+        let yGap = iyGap;
+        return;
+    }
+
+    constructor Obstacle new(int x) {
+
+        return this;
+    }
+
+    method void reset(int x) {}
+
+    method void dispose() {
+        do gates.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int collision(int x, int y) {}
+
+    method void draw() {}
+
+    method void tick() {}
+
+    method void update() {
+        do tick();
+        do draw();
+        return;
+    }
+
+    method int x() { return xPos; }
+    method int y() { return yPos; }
+}

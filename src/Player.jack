@@ -1,0 +1,45 @@
+class Player {
+    // Position on screen
+    field int xPos;
+    field int yPos;
+    // Position in memory
+    field int memoryPos;
+    // Animation frame
+    field int skin;
+    // Internal clock
+    field int tick;
+    // Player's value
+    field boolean value;
+
+    constructor Player new() {
+
+        return this;
+    }
+
+    method void reset() {}
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void move() {}
+
+    method void setVal(boolean val) {
+        let value = val;
+        return;
+    }
+
+    method void tick() {}
+
+    method void render() {}
+
+    method void update() {
+        do tick();
+        do render();
+        return;
+    }
+
+    method int x() { return xPos; }
+    method int y() { return yPos; }
+}
