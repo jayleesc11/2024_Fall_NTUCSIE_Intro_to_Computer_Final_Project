@@ -1,6 +1,6 @@
 class Gate {
     // Gate types
-    field int type;
+    field int type; // {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
     // Position on the screen
     field int xPos;
     field int yPos;
