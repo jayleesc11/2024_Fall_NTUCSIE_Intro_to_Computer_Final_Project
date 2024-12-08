@@ -11,11 +11,16 @@ class Score {
         return;
     }
 
-    method void show() {}
+    method void show() {
+        return;
+    }
 
-    method void increment() {}
+    method void increment() {
+        return;
+    }
 
     method void reset() {
         let total = 0;
         return;
     }
+}

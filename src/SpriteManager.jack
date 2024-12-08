@@ -1,3 +1,40 @@
 class SpriteManager {
-    
+    function void draw_player(int location) {
+        var int memAddress; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress, 0);
+        do Memory.poke(memAddress +32, 0);
+        do Memory.poke(memAddress +64, 0);
+        do Memory.poke(memAddress +96, 0);
+        do Memory.poke(memAddress +128, 504);
+        do Memory.poke(memAddress +160, 516);
+        do Memory.poke(memAddress +192, 1154);
+        do Memory.poke(memAddress +224, 1154);
+        do Memory.poke(memAddress +256, 1026);
+        do Memory.poke(memAddress +288, 1314);
+        do Memory.poke(memAddress +320, 708);
+        do Memory.poke(memAddress +352, 516);
+        do Memory.poke(memAddress +384, 504);
+        do Memory.poke(memAddress +416, 64);
+        do Memory.poke(memAddress +448, 64);
+        do Memory.poke(memAddress +480, 8256);
+        do Memory.poke(memAddress +512, 8256);
+        do Memory.poke(memAddress +544, 8190);
+        do Memory.poke(memAddress +576, 65);
+        do Memory.poke(memAddress +608, 65);
+        do Memory.poke(memAddress +640, 64);
+        do Memory.poke(memAddress +672, 64);
+        do Memory.poke(memAddress +704, 64);
+        do Memory.poke(memAddress +736, 1984);
+        do Memory.poke(memAddress +768, 3104);
+        do Memory.poke(memAddress +800, 2096);
+        do Memory.poke(memAddress +832, 2076);
+        do Memory.poke(memAddress +864, 2055);
+        do Memory.poke(memAddress +896, 0);
+        do Memory.poke(memAddress +928, 0);
+        do Memory.poke(memAddress +960, 0);
+        do Memory.poke(memAddress +992, 0);
+		return; 
+    }
 }

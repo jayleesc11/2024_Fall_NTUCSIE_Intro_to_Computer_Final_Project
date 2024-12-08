@@ -1,11 +1,13 @@
 class Gate {
     // Gate types
     field int type; // Gate type {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
-    field int input_rand; // Input 2 (random) {0:0 1:1}
+    field boolean input_rand; // Input 2 (random) {0:0 1:1}
     // Position on the screen
     field int xPos;
     field int yPos;
     field int xVel;
+    // Output
+    field boolean output;
     // Internal clocks
     field int tick;
 
@@ -18,7 +20,7 @@ class Gate {
         let xPos = x;
         let yPos = y;
         let type = LCGRandom.randRange(1,6);
-        let input_rand = LCGRandom.randRange(1,2);
+        let input_rand = LCGRandom.randRange(0,1);
         return;
     }
 
@@ -28,13 +30,14 @@ class Gate {
     }
 
     method boolean output(boolean input_stat) {
-        if (type = 1) {let output = imput_stat & input_rand;} else { 
-        if (type = 2) {let output = ~(imput_stat & input_rand);} else { 
-        if (type = 3) {let output = imput_stat | input_rand;} else { 
-        if (type = 4) {let output = ~(imput_stat | input_rand);} else { 
-        if (type = 5) {let output = (imput_stat & ~input_rand) | (~imput_stat & input_rand);} else { 
-        if (type = 6) {let output = (imput_stat & input_rand) | (~imput_stat & ~input_rand);} else { 
-        let output = 0;}}}}}}
+        if (type = 1) {let output = input_stat & input_rand;} else { 
+        if (type = 2) {let output = ~(input_stat & input_rand);} else { 
+        if (type = 3) {let output = input_stat | input_rand;} else { 
+        if (type = 4) {let output = ~(input_stat | input_rand);} else { 
+        if (type = 5) {let output = (input_stat & ~input_rand) | (~input_stat & input_rand);} else { 
+        if (type = 6) {let output = (input_stat & input_rand) | (~input_stat & ~input_rand);} else { 
+        let output = false;}}}}}}
+        return output;
     }
 
     method void tick() {
@@ -42,11 +45,14 @@ class Gate {
         if (xPos < (-50)) {
             do dispose();
         } else {
-            xPos = xPos - xVel;
+            let xPos = xPos - xVel;
         }
+        return;
     }
 
-    method void draw() {}
+    method void draw() {
+        return;
+    }
 
     method void update() {
         do tick();

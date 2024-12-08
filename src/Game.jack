@@ -1,19 +1,100 @@
 class Game {
+    // Constants
+    static int delay;
     // objects
     field Player player;
-    field Obstacle obs1;
-    field Obstacle obs2;
     // internal states
     field char key;
-    field boolean exit;
-    field boolean reset;
-    field boolean quit;
-    field int collision
+    field char last_key;
+    field boolean first_start;
+    field boolean start;
+    field boolean pause;
     // random number seed
     field int seed;
 
+    function void init() {
+        let delay = 5;
+        return;
+    }
+
     constructor Game new() {
-        
+        do Player.init();
+        let player = Player.new();
+        let first_start = false;
+        let start = false;
+        let seed = 0;
         return this;
+    }
+
+    method void dispose() {
+        do player.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void handle_input() {
+        let key = Keyboard.keyPressed();
+        if ((key = 32) & (~(last_key=32))) { // whitespace
+            let pause = ~pause;
+        } else {
+            if (~pause) {
+                if (key = 131) { // up arrow
+                    do player.move(true);
+                } else {
+                    if (key = 133) { // down arrow
+                        do player.move(false);
+                    }
+                }
+            }
+        }
+        let last_key = key;
+        return;
+    }
+
+    method void update() {
+        do player.update();
+        return;
+    }
+
+    method boolean run() {
+        let last_key = 0;
+        // first start
+        while(~first_start) {
+            let seed = seed + 1;
+            if (seed < 0) {
+                let seed = 0;
+            }
+            let key = Keyboard.keyPressed();
+            if ((key = 32) & (~(last_key=32))) { // whitespace
+                do LCGRandom.setSeed(seed);
+                let first_start = true;
+                let start = true;
+            }
+            let last_key = key;
+        }
+        // During the game
+        while (start) {
+            do handle_input();
+            if (~pause) {
+                do update();
+            }
+            do Sys.wait(delay);
+        }
+        // Game over, restart or not
+        while (~start) {
+            let key = Keyboard.keyPressed();
+            if (key = 32) { // whitespace
+                let start = true;
+                let pause = false;
+                do reset();
+            }
+        }
+        return true;
+    }
+
+    method void reset() {
+        do Screen.clearScreen();
+        do player.reset();
+        return;
     }
 }

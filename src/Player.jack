@@ -1,4 +1,9 @@
 class Player {
+    // Constants
+    static int xInit;
+    static int yInit;
+    static int yHeight;
+    static int yVel;
     // Position on screen
     field int xPos;
     field int yPos;
@@ -11,28 +16,62 @@ class Player {
     // Player's value
     field boolean value;
 
-    constructor Player new() {
+    function void init() {
+        let xInit = 4;
+        let yInit = 128;
+        let yHeight = 32;
+        let yVel = 2;
+        return;
+    }
 
+    constructor Player new() {
+        do reset();
         return this;
     }
 
-    method void reset() {}
+    method void reset() {
+        let xPos = xInit * 16;
+        let yPos = yInit - (yHeight / 2);
+        let memoryPos = xInit + (yPos * 32);
+        let skin = 0;
+        let tick = 0;
+        let value = false;
+        return;
+    }
 
     method void dispose() {
         do Memory.deAlloc(this);
         return;
     }
 
-    method void move() {}
+    method void move(boolean up) {
+        if (up) {
+            if (yPos > 0) {
+                let yPos = yPos - yVel;
+                let memoryPos = memoryPos - (yVel * 32);
+            }
+        } else {
+            if (yPos < (255 - yHeight - yVel)) {
+                let yPos = yPos + yVel;
+                let memoryPos = memoryPos + (yVel * 32);
+            }
+        }
+        return;
+    }
 
     method void setVal(boolean val) {
         let value = val;
         return;
     }
 
-    method void tick() {}
+    method void tick() {
+        return;
+    }
 
-    method void render() {}
+    method void render() {
+        do SpriteManager.draw_player(memoryPos);
+        return;
+    }
 
     method void update() {
         do tick();

@@ -24,7 +24,9 @@ class Obstacle {
         return this;
     }
 
-    method void reset(int x) {}
+    method void reset(int x) {
+        return;
+    }
 
     method void dispose() {
         do gates.dispose();
@@ -32,11 +34,17 @@ class Obstacle {
         return;
     }
 
-    method int collision(int x, int y) {}
+    method int collision(int x, int y) {
+        return 0;
+    }
 
-    method void draw() {}
+    method void draw() {
+        return;
+    }
 
-    method void tick() {}
+    method void tick() {
+        return;
+    }
 
     method void update() {
         do tick();
