@@ -1,16 +1,16 @@
 class Score {
     // Constants
-    static int memory_pos;
-    static int digit_width;
-    // Values
-    field int total;
-    field int digit2;
-    field int digit1;
-    field int digit0;
+    static int digit_width; // Bouunding box width
+    static int memory_pos;  // Position in memory
+    // Fields
+    field int total;        // Total score
+    field int digit2;       // Hundreds digit
+    field int digit1;       // Tens digit
+    field int digit0;       // Ones digit
 
     function void init() {
-        let memory_pos = 0;
         let digit_width = 0;
+        let memory_pos = 0;
         return;
     }
 

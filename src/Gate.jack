@@ -1,11 +1,11 @@
 class Gate {
     // Gate types
-    field int type; // Gate type {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
-    field boolean input_rand; // Input 2 (random) {0:0 1:1}
+    field int type;             // Gate type {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
+    field boolean input_rand;   // Input 2 (random) {0:0 1:1}
     // Position on the screen
-    field int xPos;
-    field int yPos;
-    field int xVel;
+    field int x_pos;
+    field int y_pos;
+    field int x_vel;
     // Output
     field boolean output;
     // Internal clocks
@@ -17,8 +17,8 @@ class Gate {
     }
 
     method void reset(int x, int y) {
-        let xPos = x;
-        let yPos = y;
+        let x_pos = x;
+        let y_pos = y;
         let type = LCGRandom.randRange(1,6);
         let input_rand = LCGRandom.randRange(0,1);
         return;
@@ -42,10 +42,10 @@ class Gate {
 
     method void tick() {
         let tick = tick + 1;
-        if (xPos < (-50)) {
+        if (x_pos < (-50)) {
             do dispose();
         } else {
-            let xPos = xPos - xVel;
+            let x_pos = x_pos - x_vel;
         }
         return;
     }

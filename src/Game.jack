@@ -1,18 +1,18 @@
 class Game {
     // Constants
     static int delay;
-    // objects
+    // Objects
     field Player player;
     field Score score;
     field Obstacle obs1;
     field Obstacle obs2;
-    // internal states
+    // Internal states
     field char key;
     field char last_key;
     field boolean first_start;
     field boolean start;
     field boolean pause;
-    // random number seed
+    // Random number seed
     field int seed;
 
     function void init() {
@@ -27,23 +27,36 @@ class Game {
         let player = Player.new();
         let score = Score.new();
         let obs1 = Obstacle.new(511);
-        let obs2 = Obstacle.new(511+100);
+        let obs2 = Obstacle.new(511 + Obstacle.interval());
         let first_start = false;
         let start = false;
         let seed = 0;
+        let last_key = 0;
         return this;
     }
 
     method void dispose() {
         do player.dispose();
         do score.dispose();
+        do obs1.dispose();
+        do obs2.dispose();
         do Memory.deAlloc(this);
         return;
     }
 
+    method boolean whitespace() {
+        let key = Keyboard.keyPressed();
+        if (key = 32 & ~(last_key = 32)) {
+            let last_key = key;
+            return true;
+        }
+        let last_key = key;
+        return false;
+    }
+
     method void handle_input() {
         let key = Keyboard.keyPressed();
-        if ((key = 32) & (~(last_key=32))) { // whitespace
+        if ((key = 32) & ~(last_key = 32)) { // whitespace
             let pause = ~pause;
         } else {
             if (~pause) {
@@ -65,24 +78,24 @@ class Game {
         do score.show();
         do obs1.update();
         do obs2.update();
+        if (obs1.collision(player.x1(), player.y1(), player.x2(), player.y2()) | obs2.collision(player.x1(), player.y1(), player.x2(), player.y2())) {
+            let start = false;
+        }
         return;
     }
 
     method boolean run() {
-        let last_key = 0;
         // first start
         while(~first_start) {
             let seed = seed + 1;
             if (seed < 0) {
                 let seed = 0;
             }
-            let key = Keyboard.keyPressed();
-            if ((key = 32) & (~(last_key=32))) { // whitespace
+            if (whitespace()) {
                 do LCGRandom.setSeed(seed);
                 let first_start = true;
                 let start = true;
             }
-            let last_key = key;
         }
         // During the game
         while (start) {
@@ -94,10 +107,7 @@ class Game {
         }
         // Game over, restart or not
         while (~start) {
-            let key = Keyboard.keyPressed();
-            if (key = 32) { // whitespace
-                let start = true;
-                let pause = false;
+            if (whitespace()) {
                 do reset();
             }
         }
@@ -105,11 +115,13 @@ class Game {
     }
 
     method void reset() {
+        let start = true;
+        let pause = false;
         do Screen.clearScreen();
         do player.reset();
         do score.reset();
         do obs1.reset(511);
-        do obs2.reset(511+100);
+        do obs2.reset(511 + Obstacle.interval());
         return;
     }
 }

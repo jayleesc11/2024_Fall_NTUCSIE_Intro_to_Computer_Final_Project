@@ -1,26 +1,39 @@
 class Player {
     // Constants
-    static int x_init;
-    static int y_init;
-    static int y_height;
-    static int y_vel;
-    // Position on screen
-    field int x_pos;
-    field int y_pos;
-    // Position in memory
-    field int memory_pos;
-    // Animation frame
-    field int skin;
-    // Internal clock
-    field int tick;
-    // Player's value
-    field boolean value;
+    static int x_width;                 // Bounding box width
+    static int y_height;                // Bounding box height
+    static int x1_mem;                  // (Initial) x1 position in memory
+    static int x1;                      // x1 position on screen
+    static int x2;                      // x2 position on screen
+    static int y1_init;                 // Initial y1 position on screen
+    static int y1_init_mem;             // Initial y1 position in memory
+    static int y_vel;                   // Movement speed on screen
+    static int y_vel_mem;               // Movement speed in memory
+    static int y_screen_lower_bound;    // Lower bound of y1 position on screen
+    static int y_screen_upper_bound;    // Upper bound of y1 position on screen
+
+    // Fields
+    field int y1;                       // y1 position on screen
+    field int mem_pos;                  // Position in memory
+    field int skin;                     // Animation frame
+    field int tick;                     // Animation tick
+    field boolean value;                // Player's value
 
     function void init() {
-        let x_init = 4;
-        let y_init = 128;
+        var int y_upper_part;
+        let y_upper_part = 40;
+        let x_width = 12;
         let y_height = 32;
+        let x1_mem = 4;
         let y_vel = 2;
+
+        let x1 = x1_mem * 16;
+        let x2 = x1 + x_width;
+        let y1_init = y_upper_part + (256 - y_upper_part - y_height) / 2;
+        let y1_init_mem = y1_init * 32;
+        let y_vel_mem = y_vel * 32;
+        let y_screen_lower_bound = y_upper_part + y_vel;
+        let y_screen_upper_bound = 255 - y_height - y_vel;
         return;
     }
 
@@ -30,9 +43,8 @@ class Player {
     }
 
     method void reset() {
-        let x_pos = x_init * 16;
-        let y_pos = y_init - (y_height / 2);
-        let memory_pos = x_init + (y_pos * 32);
+        let y1 = y1_init;
+        let mem_pos = x1_mem + y1_init_mem;
         let skin = 0;
         let tick = 0;
         let value = false;
@@ -46,14 +58,14 @@ class Player {
 
     method void move(boolean up) {
         if (up) {
-            if (y_pos > 0) {
-                let y_pos = y_pos - y_vel;
-                let memory_pos = memory_pos - (y_vel * 32);
+            if (y1 > y_screen_lower_bound) {
+                let y1 = y1 - y_vel;
+                let mem_pos = mem_pos - y_vel_mem;
             }
         } else {
-            if (y_pos < (255 - y_height - y_vel)) {
-                let y_pos = y_pos + y_vel;
-                let memory_pos = memory_pos + (y_vel * 32);
+            if (y1 < y_screen_upper_bound) {
+                let y1 = y1 + y_vel;
+                let mem_pos = mem_pos + y_vel_mem;
             }
         }
         return;
@@ -69,7 +81,7 @@ class Player {
     }
 
     method void render() {
-        do SpriteManager.draw_player(memory_pos);
+        do SpriteManager.draw_player(mem_pos);
         return;
     }
 
@@ -79,6 +91,8 @@ class Player {
         return;
     }
 
-    method int x() { return x_pos; }
-    method int y() { return y_pos; }
+    method int x1() { return x1; }
+    method int y1() { return y1; }
+    method int x2() { return x2; }
+    method int y2() { return y1 + y_height; }
 }
