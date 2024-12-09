@@ -1,48 +1,54 @@
 class Obstacle {
-    // Gates Library
-    static Array gateLibrary;
     // Constants
-    static int xVel;
-    static int yGap;
-
+    static int x_vel;
+    static int y_init;
+    static int x_width;
+    static int y_height;
     // Position on the screen
-    field int xPos;
-    field int yPos;
-    // Internal clocks
-    field int tick;
-    // Logic gates
-    field Array gates;
+    field int x_pos;
 
-    function void init(int ixVel, int iyGap) {
-        let xVel = ixVel;
-        let yGap = iyGap;
+    function void init() {
+        let x_vel = 2;
+        let y_init = 126;
+        let x_width = 100;
+        let y_height = 4;
         return;
     }
 
     constructor Obstacle new(int x) {
-
+        do reset(x);
         return this;
     }
 
     method void reset(int x) {
+        let x_pos = x;
         return;
     }
 
     method void dispose() {
-        do gates.dispose();
         do Memory.deAlloc(this);
         return;
     }
 
-    method int collision(int x, int y) {
+    method boolean collision(int x, int y) {
         return 0;
     }
 
     method void draw() {
+        // New frame
+        do Screen.setColor(true);
+        do Screen.drawRectangle(Math.min(Math.max(x_pos,0),511), y_init, Math.min(Math.max(x_pos + x_vel,0),511), y_init + (y_height / 2));
+        // Clear previous frame
+        do Screen.setColor(false);
+        do Screen.drawRectangle(Math.min(Math.max(x_pos + x_width,0),511), y_init, Math.min(Math.max(x_pos + x_width + x_vel,0),511), y_init + (y_height / 2));
         return;
     }
 
     method void tick() {
+        let x_pos = x_pos - x_vel;
+        if (x_pos < (- x_width)) {
+            do reset(511);
+        }
         return;
     }
 
@@ -52,6 +58,6 @@ class Obstacle {
         return;
     }
 
-    method int x() { return xPos; }
-    method int y() { return yPos; }
+    method int x() { return x_pos; }
+    method int y() { return y_init; }
 }

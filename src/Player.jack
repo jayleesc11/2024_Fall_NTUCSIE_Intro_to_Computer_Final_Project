@@ -1,14 +1,14 @@
 class Player {
     // Constants
-    static int xInit;
-    static int yInit;
-    static int yHeight;
-    static int yVel;
+    static int x_init;
+    static int y_init;
+    static int y_height;
+    static int y_vel;
     // Position on screen
-    field int xPos;
-    field int yPos;
+    field int x_pos;
+    field int y_pos;
     // Position in memory
-    field int memoryPos;
+    field int memory_pos;
     // Animation frame
     field int skin;
     // Internal clock
@@ -17,10 +17,10 @@ class Player {
     field boolean value;
 
     function void init() {
-        let xInit = 4;
-        let yInit = 128;
-        let yHeight = 32;
-        let yVel = 2;
+        let x_init = 4;
+        let y_init = 128;
+        let y_height = 32;
+        let y_vel = 2;
         return;
     }
 
@@ -30,9 +30,9 @@ class Player {
     }
 
     method void reset() {
-        let xPos = xInit * 16;
-        let yPos = yInit - (yHeight / 2);
-        let memoryPos = xInit + (yPos * 32);
+        let x_pos = x_init * 16;
+        let y_pos = y_init - (y_height / 2);
+        let memory_pos = x_init + (y_pos * 32);
         let skin = 0;
         let tick = 0;
         let value = false;
@@ -46,14 +46,14 @@ class Player {
 
     method void move(boolean up) {
         if (up) {
-            if (yPos > 0) {
-                let yPos = yPos - yVel;
-                let memoryPos = memoryPos - (yVel * 32);
+            if (y_pos > 0) {
+                let y_pos = y_pos - y_vel;
+                let memory_pos = memory_pos - (y_vel * 32);
             }
         } else {
-            if (yPos < (255 - yHeight - yVel)) {
-                let yPos = yPos + yVel;
-                let memoryPos = memoryPos + (yVel * 32);
+            if (y_pos < (255 - y_height - y_vel)) {
+                let y_pos = y_pos + y_vel;
+                let memory_pos = memory_pos + (y_vel * 32);
             }
         }
         return;
@@ -69,7 +69,7 @@ class Player {
     }
 
     method void render() {
-        do SpriteManager.draw_player(memoryPos);
+        do SpriteManager.draw_player(memory_pos);
         return;
     }
 
@@ -79,6 +79,6 @@ class Player {
         return;
     }
 
-    method int x() { return xPos; }
-    method int y() { return yPos; }
+    method int x() { return x_pos; }
+    method int y() { return y_pos; }
 }

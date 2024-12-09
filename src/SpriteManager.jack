@@ -37,4 +37,44 @@ class SpriteManager {
         do Memory.poke(memAddress +992, 0);
 		return; 
     }
+
+    function void draw_digit0(int location) {
+        return;
+    }
+
+    function void draw_digit1(int location) {
+        return;
+    }
+
+    function void draw_digit2(int location) {
+        return;
+    }
+
+    function void draw_digit3(int location) {
+        return;
+    }
+
+    function void draw_digit4(int location) {
+        return;
+    }
+
+    function void draw_digit5(int location) {
+        return;
+    }
+
+    function void draw_digit6(int location) {
+        return;
+    }
+
+    function void draw_digit7(int location) {
+        return;
+    }
+
+    function void draw_digit8(int location) {
+        return;
+    }
+
+    function void draw_digit9(int location) {
+        return;
+    }
 }

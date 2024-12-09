@@ -3,6 +3,9 @@ class Game {
     static int delay;
     // objects
     field Player player;
+    field Score score;
+    field Obstacle obs1;
+    field Obstacle obs2;
     // internal states
     field char key;
     field char last_key;
@@ -19,7 +22,12 @@ class Game {
 
     constructor Game new() {
         do Player.init();
+        do Score.init();
+        do Obstacle.init();
         let player = Player.new();
+        let score = Score.new();
+        let obs1 = Obstacle.new(511);
+        let obs2 = Obstacle.new(511+100);
         let first_start = false;
         let start = false;
         let seed = 0;
@@ -28,6 +36,7 @@ class Game {
 
     method void dispose() {
         do player.dispose();
+        do score.dispose();
         do Memory.deAlloc(this);
         return;
     }
@@ -53,6 +62,9 @@ class Game {
 
     method void update() {
         do player.update();
+        do score.show();
+        do obs1.update();
+        do obs2.update();
         return;
     }
 
@@ -95,6 +107,9 @@ class Game {
     method void reset() {
         do Screen.clearScreen();
         do player.reset();
+        do score.reset();
+        do obs1.reset(511);
+        do obs2.reset(511+100);
         return;
     }
 }

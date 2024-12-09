@@ -1,9 +1,30 @@
 class Score {
+    // Constants
+    static int memory_pos;
+    static int digit_width;
+    // Values
     field int total;
+    field int digit2;
+    field int digit1;
+    field int digit0;
+
+    function void init() {
+        let memory_pos = 0;
+        let digit_width = 0;
+        return;
+    }
 
     constructor Score new() {
         do reset();
         return this;
+    }
+
+    method void reset() {
+        let total = 0;
+        let digit2 = 0;
+        let digit1 = 0;
+        let digit0 = 0;
+        return;
     }
 
     method void dispose() {
@@ -11,16 +32,49 @@ class Score {
         return;
     }
 
+    method void render(int shift_x, int v) {
+        if (v = 0) { do SpriteManager.draw_digit0(memory_pos + shift_x + 512); } else { 
+        if (v = 1) { do SpriteManager.draw_digit1(memory_pos + shift_x + 512); } else { 
+        if (v = 2) { do SpriteManager.draw_digit2(memory_pos + shift_x + 512); } else { 
+        if (v = 3) { do SpriteManager.draw_digit3(memory_pos + shift_x + 512); } else { 
+        if (v = 4) { do SpriteManager.draw_digit4(memory_pos + shift_x + 512); } else { 
+        if (v = 5) { do SpriteManager.draw_digit5(memory_pos + shift_x + 512); } else { 
+        if (v = 6) { do SpriteManager.draw_digit6(memory_pos + shift_x + 512); } else { 
+        if (v = 7) { do SpriteManager.draw_digit7(memory_pos + shift_x + 512); } else { 
+        if (v = 8) { do SpriteManager.draw_digit8(memory_pos + shift_x + 512); } else { 
+        if (v = 9) { do SpriteManager.draw_digit9(memory_pos + shift_x + 512); } else { 
+        }}}}}}}}}}
+        return;
+    }
+
     method void show() {
+        if (total > 99) {
+            do render(0, digit2);
+            do render(digit_width, digit1);
+            do render(digit_width + digit_width, digit0);
+        } else {
+            if (total > 9) {
+                do render(0, digit1);
+                do render(digit_width, digit0);
+            }
+            else {
+                if (total > 0) { do render(0, digit0); }
+            }
+        }
         return;
     }
 
     method void increment() {
-        return;
-    }
-
-    method void reset() {
-        let total = 0;
+        let total = total + 1;
+        let digit0 = digit0 + 1;
+        if (digit0 > 9) {
+            let digit0 = 0;
+            let digit1 = digit1 + 1;
+            if (digit1 > 9) {
+                let digit1 = 0;
+                let digit2 = digit2 + 1;
+            }
+        }
         return;
     }
 }
