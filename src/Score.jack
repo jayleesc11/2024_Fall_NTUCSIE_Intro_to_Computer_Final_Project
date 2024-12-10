@@ -1,15 +1,17 @@
 class Score {
     // Constants
-    static int digit_width; // Bouunding box width
-    static int memory_pos;  // Position in memory
+    static int digit_width;         // Bouunding box width
+    static int double_digit_width;  // Double digit width
+    static int memory_pos;          // Position in memory
     // Fields
-    field int total;        // Total score
-    field int digit2;       // Hundreds digit
-    field int digit1;       // Tens digit
-    field int digit0;       // Ones digit
+    field int total;                // Total score
+    field int digit2;               // Hundreds digit
+    field int digit1;               // Tens digit
+    field int digit0;               // Ones digit
 
     function void init() {
         let digit_width = 0;
+        let double_digit_width = digit_width + digit_width;
         let memory_pos = 0;
         return;
     }
@@ -51,7 +53,7 @@ class Score {
         if (total > 99) {
             do render(0, digit2);
             do render(digit_width, digit1);
-            do render(digit_width + digit_width, digit0);
+            do render(double_digit_width, digit0);
         } else {
             if (total > 9) {
                 do render(0, digit1);

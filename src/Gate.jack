@@ -1,26 +1,51 @@
 class Gate {
-    // Gate types
-    field int type;             // Gate type {0:NULL 1:AND 2:NAND 3:OR 4:NOR 5:XOR 6:XNOR}
-    field boolean input_rand;   // Input 2 (random) {0:0 1:1}
-    // Position on the screen
-    field int x_pos;
-    field int y_pos;
-    field int x_vel;
-    // Output
-    field boolean output;
-    // Internal clocks
-    field int tick;
+    // Constants
+    static int x_width;         // Width of gates
+    static int y_height;        // Height of gates
+    static int x_vel;           // Movement speed on screen
+    static int x_interval;      // Interval between gates x1's
+    static int y_upper_margin;  // Upper margin of obstacles
+    static int y_gate_interval; // Interval between gates y1's
 
-    constructor Gate new(int x, int y) {
-        do reset(x, y);
+    // Fields
+    field int x1;               // x1 position on screen
+    field int y1;               // y1 position on screen
+    field int x1_init;          // Initial x1 position on screen
+
+    field int tick;             // Animation tick
+    field int type;             // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
+    field boolean input_rand;   // Input 2
+    field boolean output;       // Gate output
+
+    function void init(int margin) {
+        let x_width = 100;
+        let y_height = 50;
+        let x_vel = 2;
+        let y_upper_margin = margin;
+
+        let x_interval = (512 - x_width) / 2 + x_width;
+        let y_gate_interval = (256 - y_upper_margin - (3 * y_height)) / 4;
+        return;
+    }
+
+    constructor Gate new(int x_index, int y_index) {
+        let x1_init = 511 + ((x_index - 1) * x_interval);
+        let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_gate_interval * y_index);
+        do reset();
         return this;
     }
 
-    method void reset(int x, int y) {
-        let x_pos = x;
-        let y_pos = y;
-        let type = LCGRandom.randRange(1,6);
-        let input_rand = LCGRandom.randRange(0,1);
+    method void reset() {
+        let x1 = x1_init;
+        //let type = LCGRandom.randRange(1,6);
+        //let input_rand = LCGRandom.randRange(0,1);
+        return;
+    }
+
+    method void rebuild() {
+        let x1 = 511;
+        //let type = LCGRandom.randRange(1,6);
+        //let input_rand = LCGRandom.randRange(0,1);
         return;
     }
 
@@ -42,10 +67,10 @@ class Gate {
 
     method void tick() {
         let tick = tick + 1;
-        if (x_pos < (-50)) {
-            do dispose();
+        if (x1 + 1 < -x_width) {
+            do rebuild();
         } else {
-            let x_pos = x_pos - x_vel;
+            let x1 = x1 - x_vel;
         }
         return;
     }
@@ -59,4 +84,6 @@ class Gate {
         do draw();
         return;
     }
+
+    function int width() { return x_width; }
 }

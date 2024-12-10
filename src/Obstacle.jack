@@ -1,33 +1,37 @@
 class Obstacle {
     // Constants
-    static int x_width;     // Width of obstacles
-    static int y_height;    // Height of obstacles
-    static int x_vel;       // Movement speed on screen
-    static int y1;          // y1 position
-    static int x_interval;  // Interval between obstacles x1's
+    static int x_width;         // Width of obstacles
+    static int y_height;        // Height of obstacles
+    static int x_vel;           // Movement speed on screen
+    static int x_interval;      // Interval between obstacles x1's
+    static int y_upper_margin;  // Upper margin of obstacles
+    static int y_obs_interval;  // Interval between obstacles y1's
 
     // Fields
-    field int x1;           // x1 position on screen
+    field int x1;               // x1 position on screen
+    field int y1;               // y1 position on screen
+    field int x1_init;          // Initial x1 position on screen
 
-    function void init() {
-        var int y_upper_part;
-        let y_upper_part = 40;
-        let x_width = 100;
-        let y_height = 4;
+    function void init(int width, int margin) {
+        let y_height = 2;
         let x_vel = 2;
+        let x_width = width;
+        let y_upper_margin = margin;
         
-        let y1 = y_upper_part + (256 - y_upper_part - y_height) / 2;
         let x_interval = (512 - x_width) / 2 + x_width;
+        let y_obs_interval = (256 - y_upper_margin - (2 * y_height)) / 3;
         return;
     }
 
-    constructor Obstacle new(int x) {
-        do reset(x);
+    constructor Obstacle new(int x_index, int y_index) {
+        let x1_init = 511 + ((x_index - 1) * x_interval);
+        let x1 = x1_init;
+        let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_obs_interval * y_index);
         return this;
     }
 
-    method void reset(int x) {
-        let x1 = x;
+    method void reset() {
+        let x1 = x1_init;
         return;
     }
 
@@ -54,9 +58,10 @@ class Obstacle {
     }
 
     method void tick() {
-        let x1 = x1 - x_vel;
         if (x1 + 1 < -x_width) {
-            do reset(511);
+            let x1 = 511;
+        } else {
+            let x1 = x1 - x_vel;
         }
         return;
     }
@@ -67,6 +72,5 @@ class Obstacle {
         return;
     }
     
-    function int width() { return x_width; }
     function int interval() { return x_interval; }
 }
