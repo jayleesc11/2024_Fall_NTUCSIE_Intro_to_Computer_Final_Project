@@ -23,7 +23,7 @@ class Player {
         let x_width = 12;
         let y_height = 32;
         let x1_mem = 4;
-        let y_vel = 3;
+        let y_vel = 2;
 
         let x1 = x1_mem * 16;
         let x2 = x1 + x_width;
