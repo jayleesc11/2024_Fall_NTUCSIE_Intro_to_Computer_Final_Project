@@ -29,7 +29,7 @@ class Game {
     field int seed;
 
     function void init() {
-        let delay = 6;
+        let delay = 9;
         let y_upper_margin = 46;    // to be changed
         return;
     }
@@ -154,6 +154,13 @@ class Game {
                 let first_start = true;
                 let start = true;
                 do draw_upper();
+                // LCGRandom seed set, set random values
+                do gate1_1.reset();
+                do gate1_2.reset();
+                do gate1_3.reset();
+                do gate2_1.reset();
+                do gate2_2.reset();
+                do gate2_3.reset();
             }
         }
         // During the game

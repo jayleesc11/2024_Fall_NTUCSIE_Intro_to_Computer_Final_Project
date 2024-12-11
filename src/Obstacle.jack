@@ -9,8 +9,9 @@ class Obstacle {
 
     // Fields
     field int x1;               // x1 position on screen
-    field int y1;               // y1 position on screen
-    field int x1_init;          // Initial x1 position on screen
+    field int x1_init;          // Initial x1 position on screen (constant)
+    field int y1;               // y1 position on screen (constant)
+    field int y2;               // y2 position on screen (constant)
 
     function void init(int width, int margin) {
         let y_height = 2;
@@ -27,6 +28,7 @@ class Obstacle {
         let x1_init = 511 + ((x_index - 1) * x_interval);
         let x1 = x1_init;
         let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_obs_interval * y_index);
+        let y2 = y1 + y_height;
         return this;
     }
 
@@ -41,7 +43,7 @@ class Obstacle {
     }
 
     method boolean collision(int player_x1, int player_y1, int player_x2, int player_y2) {
-        if ((player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < (y1 + y_height)) & (player_y2 > y1)) {
+        if ((player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y2) & (player_y2 > y1)) {
             return true;
         }
         return false;
@@ -50,10 +52,10 @@ class Obstacle {
     method void draw() {
         // New frame
         do Screen.setColor(true);
-        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y1 + y_height);
+        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y2);
         // Clear previous frame
         do Screen.setColor(false);
-        do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y1 + y_height);
+        do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
         return;
     }
 

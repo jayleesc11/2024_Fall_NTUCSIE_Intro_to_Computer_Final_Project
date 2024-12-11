@@ -1,4 +1,5 @@
 class SpriteManager {
+    // To be changed to match the y_vel of the player
     function void draw_player(int location) {
         var int memAddress; 
         let memAddress = 16384+location;

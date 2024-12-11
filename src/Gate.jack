@@ -30,22 +30,22 @@ class Gate {
 
     constructor Gate new(int x_index, int y_index) {
         let x1_init = 511 + ((x_index - 1) * x_interval);
+        let x1 = x1_init;
         let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_gate_interval * y_index);
-        do reset();
         return this;
     }
 
     method void reset() {
         let x1 = x1_init;
-        //let type = LCGRandom.randRange(1,6);
-        //let input_rand = LCGRandom.randRange(0,1);
+        let type = LCGRandom.randRange(1,6);
+        let input_rand = LCGRandom.randRange(0,1);
         return;
     }
 
     method void rebuild() {
         let x1 = 511;
-        //let type = LCGRandom.randRange(1,6);
-        //let input_rand = LCGRandom.randRange(0,1);
+        let type = LCGRandom.randRange(1,6);
+        let input_rand = LCGRandom.randRange(0,1);
         return;
     }
 
