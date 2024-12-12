@@ -2,38 +2,92 @@ class Main {
 	function void main() {
 		var int state;
 		var int pos;
+		var int ypos;
+		var int type;
 		let state = 0;
 		let pos = 23;
+
     	while (pos > 0) {
 			let state = state + 1;
             do Sys.wait(2);
 			if (state = 2) {
-				do DrawGates.draw_and_2(pos);
+				do DrawAndGates.draw_and_2(pos);
+				do DrawAndGates.draw_ands_2(pos);
 			}
 			if (state = 4) {
-				do DrawGates.draw_and_4(pos);
+				do DrawAndGates.draw_and_4(pos);
+				do DrawAndGates.draw_ands_4(pos);
 			}
 			if (state = 6) {
-				do DrawGates.draw_and_6(pos);
+				do DrawAndGates.draw_and_6(pos);
+				do DrawAndGates.draw_ands_6(pos);
 			}
 			if (state = 8) {
-				do DrawGates.draw_and_8(pos);
+				do DrawAndGates.draw_and_8(pos);
+				do DrawAndGates.draw_ands_8(pos);
 			}
 			if (state = 10) {
-				do DrawGates.draw_and_10(pos);
+				do DrawAndGates.draw_and_10(pos);
+				do DrawAndGates.draw_ands_10(pos);
 			}
 			if (state = 12) {
-				do DrawGates.draw_and_12(pos);
+				do DrawAndGates.draw_and_12(pos);
+				do DrawAndGates.draw_ands_12(pos);
 			}
 			if (state = 14) {
-				do DrawGates.draw_and_14(pos);
+				do DrawAndGates.draw_and_14(pos);
+				do DrawAndGates.draw_ands_14(pos);
 			}
 			if (state = 16) {
-				do DrawGates.draw_and_16(pos);
+				do DrawAndGates.draw_and_16(pos);
+				do DrawAndGates.draw_ands_16(pos);
 				let state = 0;
 				let pos = pos - 1;
 			}
 		}
+
+		let state = 0;
+		let pos = 23;
+
+    	while (pos > 0) {
+			let state = state + 1;
+            do Sys.wait(2);
+			if (state = 2) {
+				do DrawAndGates.draw_nand_2(pos);
+				do DrawAndGates.draw_ands_2(pos);
+			}
+			if (state = 4) {
+				do DrawAndGates.draw_nand_4(pos);
+				do DrawAndGates.draw_ands_4(pos);
+			}
+			if (state = 6) {
+				do DrawAndGates.draw_nand_6(pos);
+				do DrawAndGates.draw_ands_6(pos);
+			}
+			if (state = 8) {
+				do DrawAndGates.draw_nand_8(pos);
+				do DrawAndGates.draw_ands_8(pos);
+			}
+			if (state = 10) {
+				do DrawAndGates.draw_nand_10(pos);
+				do DrawAndGates.draw_ands_10(pos);
+			}
+			if (state = 12) {
+				do DrawAndGates.draw_nand_12(pos);
+				do DrawAndGates.draw_ands_12(pos);
+			}
+			if (state = 14) {
+				do DrawAndGates.draw_nand_14(pos);
+				do DrawAndGates.draw_ands_14(pos);
+			}
+			if (state = 16) {
+				do DrawAndGates.draw_nand_16(pos);
+				do DrawAndGates.draw_ands_16(pos);
+				let state = 0;
+				let pos = pos - 1;
+			}
+		}
+
 		return;
 	}
 }
