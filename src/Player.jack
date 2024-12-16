@@ -93,4 +93,5 @@ class Player {
     method int y1() { return y1; }
     method int x2() { return x2; }
     method int y2() { return y1 + y_height; }
+    method boolean value() { return value; }
 }

@@ -25,6 +25,15 @@ class Game {
     field boolean first_start;
     field boolean start;
     field boolean pause;
+
+    // Player data
+    field int player_x1;        // constant
+    field int player_y1;
+    field int player_x2;        // constant
+    field int player_y2;
+    field boolean player_value;
+    field boolean player_last_value;
+
     // Random number seed
     field int seed;
 
@@ -42,6 +51,13 @@ class Game {
 
         let score = Score.new();
         let player = Player.new();
+        // Player data
+        let player_x1 = player.x1();
+        let player_y1 = player.y1();
+        let player_x2 = player.x2();
+        let player_y2 = player.y2();
+        let player_value = false;
+        let player_last_value = false;
 
         let gate1_1 = Gate.new(1,1);
         let gate1_2 = Gate.new(1,2);
@@ -118,8 +134,10 @@ class Game {
     }
 
     method void update() {
-        do player.update();
         do score.show();
+        do player.update();
+        let player_y1 = player.y1();
+        let player_y2 = player.y2();
         
         do gate1_1.update();
         do gate1_2.update();
@@ -133,11 +151,25 @@ class Game {
         do obs2_1.update();
         do obs2_2.update();
         
-        if (obs1_1.collision(player.x1(), player.y1(), player.x2(), player.y2()) |
-            obs1_2.collision(player.x1(), player.y1(), player.x2(), player.y2()) |
-            obs2_1.collision(player.x1(), player.y1(), player.x2(), player.y2()) |
-            obs2_2.collision(player.x1(), player.y1(), player.x2(), player.y2())) {
+        if (obs1_1.collision(player_x1, player_y1, player_x2, player_y2) |
+            obs1_2.collision(player_x1, player_y1, player_x2, player_y2) |
+            obs2_1.collision(player_x1, player_y1, player_x2, player_y2) |
+            obs2_2.collision(player_x1, player_y1, player_x2, player_y2)) {
             let start = false;
+        }
+
+        if (gate1_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+            gate1_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+            gate1_3.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+            gate2_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+            gate2_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+            gate2_3.collision(player_x1, player_y1, player_x2, player_y2, player_value)) {
+            do player.setVal(Gate.output());
+            let player_value = player.value();
+            if (~player_last_value & player_value) {
+                do score.increment();
+            }
+            let player_last_value = player_value;
         }
         return;
     }

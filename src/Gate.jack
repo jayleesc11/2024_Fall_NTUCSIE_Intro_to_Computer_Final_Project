@@ -1,21 +1,28 @@
 class Gate {
     // Constants
-    static int x_width;         // Width of gates
-    static int y_height;        // Height of gates
-    static int x_vel;           // Movement speed on screen
-    static int x_interval;      // Interval between gates x1's
-    static int y_upper_margin;  // Upper margin of obstacles
-    static int y_gate_interval; // Interval between gates y1's
+    static int x_width;             // Width of gates
+    static int y_height;            // Height of gates
+    static int x_vel;               // Movement speed on screen
+    static int x_interval;          // Interval between gates x1's
+    static int y_upper_margin;      // Upper margin of obstacles
+    static int y_gate_interval;     // Interval between gates y1's
+
+    // Static
+    static boolean output;           // Gate output
 
     // Fields
-    field int x1;               // x1 position on screen
-    field int y1;               // y1 position on screen
-    field int x1_init;          // Initial x1 position on screen
+    field int x1;                   // x1 position on screen
+    field int x1_init;              // Initial x1 position on screen
+    field int y1;                   // y1 position on screen
+    field int y2;                    // y2 position on screen
+    field int y_collision_upper;    // Collision upper bound
+    field int y_collision_lower;    // Collision lower bound
 
-    field int tick;             // Animation tick
-    field int type;             // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
-    field boolean input_rand;   // Input 2
-    field boolean output;       // Gate output
+    field int tick;                 // Animation tick
+    field int type;                 // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
+    field boolean input_rand;       // Input 2
+    field boolean exists;           // Gate exists
+    field boolean erased;           // Gate erased
 
     function void init(int margin) {
         let x_width = 100;
@@ -29,9 +36,22 @@ class Gate {
     }
 
     constructor Gate new(int x_index, int y_index) {
-        let x1_init = 511 + ((x_index - 1) * x_interval);
+        let x1_init = 511 + (x_interval * (x_index - 1));
         let x1 = x1_init;
-        let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_gate_interval * y_index);
+        let y1 = y_upper_margin + ((y_height + y_gate_interval) * y_index) - y_height;
+        let y2 = y1 + y_height;
+        if (y_index = 1) {
+            let y_collision_lower = y_upper_margin;
+            let y_collision_upper = y1 + y_height + (y_gate_interval / 2);
+        } else {
+            if (y_index = 2) {
+                let y_collision_lower = y1 - (y_gate_interval / 2);
+                let y_collision_upper = y1 + y_height + (y_gate_interval / 2);
+            } else { // y_index = 3
+                let y_collision_lower = y1 - (y_gate_interval / 2);
+                let y_collision_upper = 255;
+            }
+        }
         return this;
     }
 
@@ -39,13 +59,15 @@ class Gate {
         let x1 = x1_init;
         let type = LCGRandom.randRange(1,6);
         let input_rand = LCGRandom.randRange(0,1);
+        let tick = 0;
+        let exists = true;
+        let erased = false;
         return;
     }
 
     method void rebuild() {
+        do reset();
         let x1 = 511;
-        let type = LCGRandom.randRange(1,6);
-        let input_rand = LCGRandom.randRange(0,1);
         return;
     }
 
@@ -53,8 +75,17 @@ class Gate {
         do Memory.deAlloc(this);
         return;
     }
+    
+    method boolean collision(int player_x1, int player_y1, int player_x2, int player_y2, boolean player_state) {
+        if ((player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y_collision_upper) & (player_y2 > y_collision_lower)) {
+            do logic(player_state);
+            let exists = false;
+            return true;
+        }
+        return false;
+    }
 
-    method boolean output(boolean input_stat) {
+    method void logic(boolean input_stat) {
         if (type = 1) {let output = input_stat & input_rand;} else { 
         if (type = 2) {let output = ~(input_stat & input_rand);} else { 
         if (type = 3) {let output = input_stat | input_rand;} else { 
@@ -62,7 +93,7 @@ class Gate {
         if (type = 5) {let output = (input_stat & ~input_rand) | (~input_stat & input_rand);} else { 
         if (type = 6) {let output = (input_stat & input_rand) | (~input_stat & ~input_rand);} else { 
         let output = false;}}}}}}
-        return output;
+        return;
     }
 
     method void tick() {
@@ -76,14 +107,27 @@ class Gate {
     }
 
     method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y2);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
         return;
     }
 
     method void update() {
         do tick();
-        do draw();
+        if (exists) {
+            do draw();
+        } else {
+            if (~erased) {
+                do Screen.setColor(false);
+                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width+ x_vel,0),511), y1 + y_height);
+                let erased = true;
+            }
+        }
         return;
     }
 
     function int width() { return x_width; }
+    function boolean output() { return output; }
 }
