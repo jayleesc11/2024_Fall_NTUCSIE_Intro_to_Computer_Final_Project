@@ -15,13 +15,13 @@ class Player {
     // Fields
     field int y1;                       // y1 position on screen
     field int mem_pos;                  // Position in memory
-    field int skin;                     // Animation frame
     field int tick;                     // Animation tick
+    field boolean skin;                     // Player's skin
     field boolean value;                // Player's value
 
     function void init(int y_upper_part) {
-        let x_width = 12;
-        let y_height = 32;
+        let x_width = 16;
+        let y_height = 44;
         let x1_mem = 4;
         let y_vel = 2;
 
@@ -43,8 +43,8 @@ class Player {
     method void reset() {
         let y1 = y1_init;
         let mem_pos = x1_mem + y1_init_mem;
-        let skin = 0;
         let tick = 0;
+        let skin = false;
         let value = false;
         return;
     }
@@ -75,11 +75,28 @@ class Player {
     }
 
     method void tick() {
+        let tick = tick + 1;
+        if (tick = 15) {
+            let tick = 0;
+            let skin = ~skin;
+        }
         return;
     }
 
     method void render() {
-        do SpriteManager.draw_player(mem_pos);
+        if (value) {
+            if (skin) {
+                do SpriteManager.draw_player1_1(mem_pos);
+            } else {
+                do SpriteManager.draw_player1_0(mem_pos);
+            }
+        } else {
+            if (skin) {
+                do SpriteManager.draw_player0_1(mem_pos);
+            } else {
+                do SpriteManager.draw_player0_0(mem_pos);
+            }
+        }
         return;
     }
 

@@ -77,7 +77,7 @@ class Gate {
     }
     
     method boolean collision(int player_x1, int player_y1, int player_x2, int player_y2, boolean player_state) {
-        if ((player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y_collision_upper) & (player_y2 > y_collision_lower)) {
+        if (exists & (player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y_collision_upper) & (player_y2 > y_collision_lower)) {
             do logic(player_state);
             let exists = false;
             return true;
