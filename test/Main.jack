@@ -4,89 +4,223 @@ class Main {
 		var int pos;
 		var int ypos;
 		var int type;
+
 		let state = 0;
 		let pos = 23;
-
+		do Draw.draw_and_2(pos);
     	while (pos > 0) {
 			let state = state + 1;
             do Sys.wait(2);
 			if (state = 2) {
-				do DrawAndGates.draw_and_2(pos);
-				do DrawAndGates.draw_ands_2(pos);
+				do Draw.draw_and_2(pos);
 			}
 			if (state = 4) {
-				do DrawAndGates.draw_and_4(pos);
-				do DrawAndGates.draw_ands_4(pos);
+				do Draw.draw_and_4(pos);
 			}
 			if (state = 6) {
-				do DrawAndGates.draw_and_6(pos);
-				do DrawAndGates.draw_ands_6(pos);
+				do Draw.draw_and_6(pos);
 			}
 			if (state = 8) {
-				do DrawAndGates.draw_and_8(pos);
-				do DrawAndGates.draw_ands_8(pos);
+				do Draw.draw_and_8(pos);
 			}
 			if (state = 10) {
-				do DrawAndGates.draw_and_10(pos);
-				do DrawAndGates.draw_ands_10(pos);
+				do Draw.draw_and_10(pos);
 			}
 			if (state = 12) {
-				do DrawAndGates.draw_and_12(pos);
-				do DrawAndGates.draw_ands_12(pos);
+				do Draw.draw_and_12(pos);
 			}
 			if (state = 14) {
-				do DrawAndGates.draw_and_14(pos);
-				do DrawAndGates.draw_ands_14(pos);
+				do Draw.draw_and_14(pos);
 			}
 			if (state = 16) {
-				do DrawAndGates.draw_and_16(pos);
-				do DrawAndGates.draw_ands_16(pos);
+				do Draw.draw_and_16(pos);
 				let state = 0;
 				let pos = pos - 1;
 			}
 		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
+
+		let state = 0;
+		let pos = 1623;
+
+    	while (pos > 1600) {
+			let state = state + 1;
+            do Sys.wait(2);
+			if (state = 2) {
+				do Draw.draw_nand_2(pos);
+			}
+			if (state = 4) {
+				do Draw.draw_nand_4(pos);
+			}
+			if (state = 6) {
+				do Draw.draw_nand_6(pos);
+			}
+			if (state = 8) {
+				do Draw.draw_nand_8(pos);
+			}
+			if (state = 10) {
+				do Draw.draw_nand_10(pos);
+			}
+			if (state = 12) {
+				do Draw.draw_nand_12(pos);
+			}
+			if (state = 14) {
+				do Draw.draw_nand_14(pos);
+			}
+			if (state = 16) {
+				do Draw.draw_nand_16(pos);
+				let state = 0;
+				let pos = pos - 1;
+			}
+		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
+		
+		let state = 0;
+		let pos = 3223;
+
+    	while (pos > 3200) {
+			let state = state + 1;
+            do Sys.wait(2);
+			if (state = 2) {
+				do Draw.draw_or_2(pos);
+			}
+			if (state = 4) {
+				do Draw.draw_or_4(pos);
+			}
+			if (state = 6) {
+				do Draw.draw_or_6(pos);
+			}
+			if (state = 8) {
+				do Draw.draw_or_8(pos);
+			}
+			if (state = 10) {
+				do Draw.draw_or_10(pos);
+			}
+			if (state = 12) {
+				do Draw.draw_or_12(pos);
+			}
+			if (state = 14) {
+				do Draw.draw_or_14(pos);
+			}
+			if (state = 16) {
+				do Draw.draw_or_16(pos);
+				let state = 0;
+				let pos = pos - 1;
+			}
+		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
+
+		
+		let state = 0;
+		let pos = 4823;
+
+    	while (pos > 4800) {
+			let state = state + 1;
+            do Sys.wait(2);
+			if (state = 2) {
+				do Draw.draw_nor_2(pos);
+			}
+			if (state = 4) {
+				do Draw.draw_nor_4(pos);
+			}
+			if (state = 6) {
+				do Draw.draw_nor_6(pos);
+			}
+			if (state = 8) {
+				do Draw.draw_nor_8(pos);
+			}
+			if (state = 10) {
+				do Draw.draw_nor_10(pos);
+			}
+			if (state = 12) {
+				do Draw.draw_nor_12(pos);
+			}
+			if (state = 14) {
+				do Draw.draw_nor_14(pos);
+			}
+			if (state = 16) {
+				do Draw.draw_nor_16(pos);
+				let state = 0;
+				let pos = pos - 1;
+			}
+		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
 
 		let state = 0;
 		let pos = 23;
 
-    	while (pos > 0) {
+		while (pos > 0) {
 			let state = state + 1;
-            do Sys.wait(2);
+			do Sys.wait(2);
 			if (state = 2) {
-				do DrawAndGates.draw_nand_2(pos);
-				do DrawAndGates.draw_ands_2(pos);
+				do Draw.draw_xor_2(pos);
 			}
 			if (state = 4) {
-				do DrawAndGates.draw_nand_4(pos);
-				do DrawAndGates.draw_ands_4(pos);
+				do Draw.draw_xor_4(pos);
 			}
 			if (state = 6) {
-				do DrawAndGates.draw_nand_6(pos);
-				do DrawAndGates.draw_ands_6(pos);
+				do Draw.draw_xor_6(pos);
 			}
 			if (state = 8) {
-				do DrawAndGates.draw_nand_8(pos);
-				do DrawAndGates.draw_ands_8(pos);
+				do Draw.draw_xor_8(pos);
 			}
 			if (state = 10) {
-				do DrawAndGates.draw_nand_10(pos);
-				do DrawAndGates.draw_ands_10(pos);
+				do Draw.draw_xor_10(pos);
 			}
 			if (state = 12) {
-				do DrawAndGates.draw_nand_12(pos);
-				do DrawAndGates.draw_ands_12(pos);
+				do Draw.draw_xor_12(pos);
 			}
 			if (state = 14) {
-				do DrawAndGates.draw_nand_14(pos);
-				do DrawAndGates.draw_ands_14(pos);
+				do Draw.draw_xor_14(pos);
 			}
 			if (state = 16) {
-				do DrawAndGates.draw_nand_16(pos);
-				do DrawAndGates.draw_ands_16(pos);
+				do Draw.draw_xor_16(pos);
 				let state = 0;
 				let pos = pos - 1;
 			}
 		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
+
+		let state = 0;
+		let pos = 1623;
+
+		while (pos > 1600) {
+			let state = state + 1;
+			do Sys.wait(2);
+			if (state = 2) {
+				do Draw.draw_xnor_2(pos);
+			}
+			if (state = 4) {
+				do Draw.draw_xnor_4(pos);
+			}
+			if (state = 6) {
+				do Draw.draw_xnor_6(pos);
+			}
+			if (state = 8) {
+				do Draw.draw_xnor_8(pos);
+			}
+			if (state = 10) {
+				do Draw.draw_xnor_10(pos);
+			}
+			if (state = 12) {
+				do Draw.draw_xnor_12(pos);
+			}
+			if (state = 14) {
+				do Draw.draw_xnor_14(pos);
+			}
+			if (state = 16) {
+				do Draw.draw_xnor_16(pos);
+				let state = 0;
+				let pos = pos - 1;
+			}
+		}
+		do Sys.wait(2);
+		do DrawGates.clear_gate(pos);
 
 		return;
 	}
