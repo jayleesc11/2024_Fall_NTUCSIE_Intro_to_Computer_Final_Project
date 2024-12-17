@@ -39,15 +39,15 @@ class Game {
 
     function void init() {
         let delay = 9;
-        let y_upper_margin = 46;    // to be changed
+        let y_upper_margin = 41;
         return;
     }
 
     constructor Game new() {
         do Score.init();
         do Player.init(y_upper_margin);
-        do Gate.init(y_upper_margin);
-        do Obstacle.init(Gate.width(), y_upper_margin);
+        do Gate.init(y_upper_margin, 2);
+        do Obstacle.init(y_upper_margin, Gate.width());
 
         let score = Score.new();
         let player = Player.new();
@@ -129,7 +129,7 @@ class Game {
 
     method void draw_upper() {
         do Screen.setColor(true);
-        do Screen.drawRectangle(0, y_upper_margin - 2, 511, y_upper_margin);
+        do Screen.drawRectangle(0, y_upper_margin - 1, 511, y_upper_margin);
         return;
     }
 

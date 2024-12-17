@@ -13,22 +13,22 @@ class Obstacle {
     field int y1;               // y1 position on screen (constant)
     field int y2;               // y2 position on screen (constant)
 
-    function void init(int width, int margin) {
+    function void init(int margin, int width) {
         let y_height = 2;
         let x_vel = 2;
         let x_width = width;
         let y_upper_margin = margin;
-        
-        let x_interval = (512 - x_width) / 2 + x_width;
-        let y_obs_interval = (256 - y_upper_margin - (2 * y_height)) / 3;
+
+        let x_interval = ((512 - x_width) / 2) + x_width;           // 306
+        let y_obs_interval = (255 - y_upper_margin - (2 * 2)) / 3;  // 70
         return;
     }
 
     constructor Obstacle new(int x_index, int y_index) {
-        let x1_init = 511 + ((x_index - 1) * x_interval);
+        let x1_init = 512 + ((x_index - 1) * x_interval);
         let x1 = x1_init;
-        let y1 = y_upper_margin + (y_height * (y_index - 1)) + (y_obs_interval * y_index);
-        let y2 = y1 + y_height;
+        let y1 = y_upper_margin + ((y_height + y_obs_interval) * y_index) - y_height;
+        let y2 = y1 + y_height - 1;
         return this;
     }
 
@@ -61,7 +61,7 @@ class Obstacle {
 
     method void tick() {
         if (x1 + 1 < -x_width) {
-            let x1 = 511;
+            let x1 = 512;
         } else {
             let x1 = x1 - x_vel;
         }
@@ -69,8 +69,8 @@ class Obstacle {
     }
 
     method void update() {
-        do tick();
         do draw();
+        do tick();
         return;
     }
     

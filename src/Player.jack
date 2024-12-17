@@ -11,27 +11,29 @@ class Player {
     static int y_vel_mem;               // Movement speed in memory
     static int y_screen_lower_bound;    // Lower bound of y1 position on screen
     static int y_screen_upper_bound;    // Upper bound of y1 position on screen
+    static int frame_interval;          // Animation frame interval
 
     // Fields
     field int y1;                       // y1 position on screen
     field int mem_pos;                  // Position in memory
     field int tick;                     // Animation tick
-    field boolean skin;                     // Player's skin
+    field boolean skin;                 // Player's skin
     field boolean value;                // Player's value
 
-    function void init(int y_upper_part) {
+    function void init(int y_upper_margin) {
         let x_width = 16;
         let y_height = 44;
-        let x1_mem = 4;
+        let x1_mem = 8;
         let y_vel = 2;
+        let frame_interval = 15;
 
         let x1 = x1_mem * 16;
         let x2 = x1 + x_width;
-        let y1_init = y_upper_part + (256 - y_upper_part - y_height) / 2;
+        let y1_init = y_upper_margin + ((255 - y_upper_margin - y_height) / 2); // 126
         let y1_init_mem = y1_init * 32;
         let y_vel_mem = y_vel * 32;
-        let y_screen_lower_bound = y_upper_part + y_vel;
-        let y_screen_upper_bound = 255 - y_height - y_vel;
+        let y_screen_lower_bound = y_upper_margin + 1;                          // 42
+        let y_screen_upper_bound = 256 - y_height;                              // 212
         return;
     }
 
@@ -76,7 +78,7 @@ class Player {
 
     method void tick() {
         let tick = tick + 1;
-        if (tick = 15) {
+        if (tick = frame_interval) {
             let tick = 0;
             let skin = ~skin;
         }
@@ -101,14 +103,14 @@ class Player {
     }
 
     method void update() {
-        do tick();
         do render();
+        do tick();
         return;
     }
 
     method int x1() { return x1; }
     method int y1() { return y1; }
     method int x2() { return x2; }
-    method int y2() { return y1 + y_height; }
+    method int y2() { return y1 + y_height - 1; }
     method boolean value() { return value; }
 }

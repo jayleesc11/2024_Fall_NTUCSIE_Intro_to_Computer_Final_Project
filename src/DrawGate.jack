@@ -1,0 +1,346 @@
+class DrawGate {
+	function void draw_and_2(int location){
+		do DrawGateParts.draw_1_2(location);
+		do DrawGateParts.draw_12_2(location);
+		do DrawGateParts.draw_123456_2(location);
+		return;
+	}
+	function void draw_and_4(int location){
+		do DrawGateParts.draw_1_4(location);
+		do DrawGateParts.draw_12_4(location);
+		do DrawGateParts.draw_123456_4(location);
+		return;
+	}
+	function void draw_and_6(int location){
+		do DrawGateParts.draw_1_6(location);
+		do DrawGateParts.draw_12_6(location);
+		do DrawGateParts.draw_123456_6(location);
+		return;
+	}
+	function void draw_and_8(int location){
+		do DrawGateParts.draw_1_8(location);
+		do DrawGateParts.draw_12_8(location);
+		do DrawGateParts.draw_123456_8(location);
+		return;
+	}
+	function void draw_and_10(int location){
+		do DrawGateParts.draw_1_10(location);
+		do DrawGateParts.draw_12_10(location);
+		do DrawGateParts.draw_123456_10(location);
+		return;
+	}
+	function void draw_and_12(int location){
+		do DrawGateParts.draw_1_12(location);
+		do DrawGateParts.draw_12_12(location);
+		do DrawGateParts.draw_123456_12(location);
+		return;
+	}
+	function void draw_and_14(int location){
+		do DrawGateParts.draw_1_14(location);
+		do DrawGateParts.draw_12_14(location);
+		do DrawGateParts.draw_123456_14(location);
+		return;
+	}
+	function void draw_and_16(int location){
+		do DrawGateParts.draw_1_16(location);
+		do DrawGateParts.draw_12_16(location);
+		do DrawGateParts.draw_123456_16(location);
+		return;
+	}
+	function void draw_nand_2(int location){
+		do DrawGateParts.draw_12_2(location);
+		do DrawGateParts.draw_123456_2(location);
+		do DrawGateParts.draw_2_2(location);
+		do DrawGateParts.draw_246_2(location);
+		return;
+	}
+	function void draw_nand_4(int location){
+		do DrawGateParts.draw_12_4(location);
+		do DrawGateParts.draw_123456_4(location);
+		do DrawGateParts.draw_2_4(location);
+		do DrawGateParts.draw_246_4(location);
+		return;
+	}
+	function void draw_nand_6(int location){
+		do DrawGateParts.draw_12_6(location);
+		do DrawGateParts.draw_123456_6(location);
+		do DrawGateParts.draw_2_6(location);
+		do DrawGateParts.draw_246_6(location);
+		return;
+	}
+	function void draw_nand_8(int location){
+		do DrawGateParts.draw_12_8(location);
+		do DrawGateParts.draw_123456_8(location);
+		do DrawGateParts.draw_2_8(location);
+		do DrawGateParts.draw_246_8(location);
+		return;
+	}
+	function void draw_nand_10(int location){
+		do DrawGateParts.draw_12_10(location);
+		do DrawGateParts.draw_123456_10(location);
+		do DrawGateParts.draw_2_10(location);
+		do DrawGateParts.draw_246_10(location);
+		return;
+	}
+	function void draw_nand_12(int location){
+		do DrawGateParts.draw_12_12(location);
+		do DrawGateParts.draw_123456_12(location);
+		do DrawGateParts.draw_2_12(location);
+		do DrawGateParts.draw_246_12(location);
+		return;
+	}
+	function void draw_nand_14(int location){
+		do DrawGateParts.draw_12_14(location);
+		do DrawGateParts.draw_123456_14(location);
+		do DrawGateParts.draw_2_14(location);
+		do DrawGateParts.draw_246_14(location);
+		return;
+	}
+	function void draw_nand_16(int location){
+		do DrawGateParts.draw_12_16(location);
+		do DrawGateParts.draw_123456_16(location);
+		do DrawGateParts.draw_2_16(location);
+		do DrawGateParts.draw_246_16(location);
+		return;
+	}
+	function void draw_or_2(int location){
+		do DrawGateParts.draw_123456_2(location);
+		do DrawGateParts.draw_34_2(location);
+		do DrawGateParts.draw_3456_2(location);
+		do DrawGateParts.draw_35_2(location);
+		return;
+	}
+	function void draw_or_4(int location){
+		do DrawGateParts.draw_123456_4(location);
+		do DrawGateParts.draw_34_4(location);
+		do DrawGateParts.draw_3456_4(location);
+		do DrawGateParts.draw_35_4(location);
+		return;
+	}
+	function void draw_or_6(int location){
+		do DrawGateParts.draw_123456_6(location);
+		do DrawGateParts.draw_34_6(location);
+		do DrawGateParts.draw_3456_6(location);
+		do DrawGateParts.draw_35_6(location);
+		return;
+	}
+	function void draw_or_8(int location){
+		do DrawGateParts.draw_123456_8(location);
+		do DrawGateParts.draw_34_8(location);
+		do DrawGateParts.draw_3456_8(location);
+		do DrawGateParts.draw_35_8(location);
+		return;
+	}
+	function void draw_or_10(int location){
+		do DrawGateParts.draw_123456_10(location);
+		do DrawGateParts.draw_34_10(location);
+		do DrawGateParts.draw_3456_10(location);
+		do DrawGateParts.draw_35_10(location);
+		return;
+	}
+	function void draw_or_12(int location){
+		do DrawGateParts.draw_123456_12(location);
+		do DrawGateParts.draw_34_12(location);
+		do DrawGateParts.draw_3456_12(location);
+		do DrawGateParts.draw_35_12(location);
+		return;
+	}
+	function void draw_or_14(int location){
+		do DrawGateParts.draw_123456_14(location);
+		do DrawGateParts.draw_34_14(location);
+		do DrawGateParts.draw_3456_14(location);
+		do DrawGateParts.draw_35_14(location);
+		return;
+	}
+	function void draw_or_16(int location){
+		do DrawGateParts.draw_123456_16(location);
+		do DrawGateParts.draw_34_16(location);
+		do DrawGateParts.draw_3456_16(location);
+		do DrawGateParts.draw_35_16(location);
+		return;
+	}
+	function void draw_nor_2(int location){
+		do DrawGateParts.draw_123456_2(location);
+		do DrawGateParts.draw_246_2(location);
+		do DrawGateParts.draw_34_2(location);
+		do DrawGateParts.draw_3456_2(location);
+		do DrawGateParts.draw_46_2(location);
+		return;
+	}
+	function void draw_nor_4(int location){
+		do DrawGateParts.draw_123456_4(location);
+		do DrawGateParts.draw_246_4(location);
+		do DrawGateParts.draw_34_4(location);
+		do DrawGateParts.draw_3456_4(location);
+		do DrawGateParts.draw_46_4(location);
+		return;
+	}
+	function void draw_nor_6(int location){
+		do DrawGateParts.draw_123456_6(location);
+		do DrawGateParts.draw_246_6(location);
+		do DrawGateParts.draw_34_6(location);
+		do DrawGateParts.draw_3456_6(location);
+		do DrawGateParts.draw_46_6(location);
+		return;
+	}
+	function void draw_nor_8(int location){
+		do DrawGateParts.draw_123456_8(location);
+		do DrawGateParts.draw_246_8(location);
+		do DrawGateParts.draw_34_8(location);
+		do DrawGateParts.draw_3456_8(location);
+		do DrawGateParts.draw_46_8(location);
+		return;
+	}
+	function void draw_nor_10(int location){
+		do DrawGateParts.draw_123456_10(location);
+		do DrawGateParts.draw_246_10(location);
+		do DrawGateParts.draw_34_10(location);
+		do DrawGateParts.draw_3456_10(location);
+		do DrawGateParts.draw_46_10(location);
+		return;
+	}
+	function void draw_nor_12(int location){
+		do DrawGateParts.draw_123456_12(location);
+		do DrawGateParts.draw_246_12(location);
+		do DrawGateParts.draw_34_12(location);
+		do DrawGateParts.draw_3456_12(location);
+		do DrawGateParts.draw_46_12(location);
+		return;
+	}
+	function void draw_nor_14(int location){
+		do DrawGateParts.draw_123456_14(location);
+		do DrawGateParts.draw_246_14(location);
+		do DrawGateParts.draw_34_14(location);
+		do DrawGateParts.draw_3456_14(location);
+		do DrawGateParts.draw_46_14(location);
+		return;
+	}
+	function void draw_nor_16(int location){
+		do DrawGateParts.draw_123456_16(location);
+		do DrawGateParts.draw_246_16(location);
+		do DrawGateParts.draw_34_16(location);
+		do DrawGateParts.draw_3456_16(location);
+		do DrawGateParts.draw_46_16(location);
+		return;
+	}
+	function void draw_xor_2(int location){
+		do DrawGateParts.draw_123456_2(location);
+		do DrawGateParts.draw_3456_2(location);
+		do DrawGateParts.draw_35_2(location);
+		do DrawGateParts.draw_56_2(location);
+		return;
+	}
+	function void draw_xor_4(int location){
+		do DrawGateParts.draw_123456_4(location);
+		do DrawGateParts.draw_3456_4(location);
+		do DrawGateParts.draw_35_4(location);
+		do DrawGateParts.draw_56_4(location);
+		return;
+	}
+	function void draw_xor_6(int location){
+		do DrawGateParts.draw_123456_6(location);
+		do DrawGateParts.draw_3456_6(location);
+		do DrawGateParts.draw_35_6(location);
+		do DrawGateParts.draw_56_6(location);
+		return;
+	}
+	function void draw_xor_8(int location){
+		do DrawGateParts.draw_123456_8(location);
+		do DrawGateParts.draw_3456_8(location);
+		do DrawGateParts.draw_35_8(location);
+		do DrawGateParts.draw_56_8(location);
+		return;
+	}
+	function void draw_xor_10(int location){
+		do DrawGateParts.draw_123456_10(location);
+		do DrawGateParts.draw_3456_10(location);
+		do DrawGateParts.draw_35_10(location);
+		do DrawGateParts.draw_56_10(location);
+		return;
+	}
+	function void draw_xor_12(int location){
+		do DrawGateParts.draw_123456_12(location);
+		do DrawGateParts.draw_3456_12(location);
+		do DrawGateParts.draw_35_12(location);
+		do DrawGateParts.draw_56_12(location);
+		return;
+	}
+	function void draw_xor_14(int location){
+		do DrawGateParts.draw_123456_14(location);
+		do DrawGateParts.draw_3456_14(location);
+		do DrawGateParts.draw_35_14(location);
+		do DrawGateParts.draw_56_14(location);
+		return;
+	}
+	function void draw_xor_16(int location){
+		do DrawGateParts.draw_123456_16(location);
+		do DrawGateParts.draw_3456_16(location);
+		do DrawGateParts.draw_35_16(location);
+		do DrawGateParts.draw_56_16(location);
+		return;
+	}
+	function void draw_xnor_2(int location){
+		do DrawGateParts.draw_123456_2(location);
+		do DrawGateParts.draw_246_2(location);
+		do DrawGateParts.draw_3456_2(location);
+		do DrawGateParts.draw_46_2(location);
+		do DrawGateParts.draw_56_2(location);
+		return;
+	}
+	function void draw_xnor_4(int location){
+		do DrawGateParts.draw_123456_4(location);
+		do DrawGateParts.draw_246_4(location);
+		do DrawGateParts.draw_3456_4(location);
+		do DrawGateParts.draw_46_4(location);
+		do DrawGateParts.draw_56_4(location);
+		return;
+	}
+	function void draw_xnor_6(int location){
+		do DrawGateParts.draw_123456_6(location);
+		do DrawGateParts.draw_246_6(location);
+		do DrawGateParts.draw_3456_6(location);
+		do DrawGateParts.draw_46_6(location);
+		do DrawGateParts.draw_56_6(location);
+		return;
+	}
+	function void draw_xnor_8(int location){
+		do DrawGateParts.draw_123456_8(location);
+		do DrawGateParts.draw_246_8(location);
+		do DrawGateParts.draw_3456_8(location);
+		do DrawGateParts.draw_46_8(location);
+		do DrawGateParts.draw_56_8(location);
+		return;
+	}
+	function void draw_xnor_10(int location){
+		do DrawGateParts.draw_123456_10(location);
+		do DrawGateParts.draw_246_10(location);
+		do DrawGateParts.draw_3456_10(location);
+		do DrawGateParts.draw_46_10(location);
+		do DrawGateParts.draw_56_10(location);
+		return;
+	}
+	function void draw_xnor_12(int location){
+		do DrawGateParts.draw_123456_12(location);
+		do DrawGateParts.draw_246_12(location);
+		do DrawGateParts.draw_3456_12(location);
+		do DrawGateParts.draw_46_12(location);
+		do DrawGateParts.draw_56_12(location);
+		return;
+	}
+	function void draw_xnor_14(int location){
+		do DrawGateParts.draw_123456_14(location);
+		do DrawGateParts.draw_246_14(location);
+		do DrawGateParts.draw_3456_14(location);
+		do DrawGateParts.draw_46_14(location);
+		do DrawGateParts.draw_56_14(location);
+		return;
+	}
+	function void draw_xnor_16(int location){
+		do DrawGateParts.draw_123456_16(location);
+		do DrawGateParts.draw_246_16(location);
+		do DrawGateParts.draw_3456_16(location);
+		do DrawGateParts.draw_46_16(location);
+		do DrawGateParts.draw_56_16(location);
+		return;
+	}
+}

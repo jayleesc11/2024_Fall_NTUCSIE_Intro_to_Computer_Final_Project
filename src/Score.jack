@@ -10,9 +10,9 @@ class Score {
     field int digit0;               // Ones digit
 
     function void init() {
-        let digit_width = 0;
+        let digit_width = 2;
         let double_digit_width = digit_width + digit_width;
-        let memory_pos = 0;
+        let memory_pos = 4;
         return;
     }
 
@@ -35,16 +35,16 @@ class Score {
     }
 
     method void render(int shift_x, int v) {
-        if (v = 0) { do SpriteManager.draw_digit0(memory_pos + shift_x + 512); } else { 
-        if (v = 1) { do SpriteManager.draw_digit1(memory_pos + shift_x + 512); } else { 
-        if (v = 2) { do SpriteManager.draw_digit2(memory_pos + shift_x + 512); } else { 
-        if (v = 3) { do SpriteManager.draw_digit3(memory_pos + shift_x + 512); } else { 
-        if (v = 4) { do SpriteManager.draw_digit4(memory_pos + shift_x + 512); } else { 
-        if (v = 5) { do SpriteManager.draw_digit5(memory_pos + shift_x + 512); } else { 
-        if (v = 6) { do SpriteManager.draw_digit6(memory_pos + shift_x + 512); } else { 
-        if (v = 7) { do SpriteManager.draw_digit7(memory_pos + shift_x + 512); } else { 
-        if (v = 8) { do SpriteManager.draw_digit8(memory_pos + shift_x + 512); } else { 
-        if (v = 9) { do SpriteManager.draw_digit9(memory_pos + shift_x + 512); } else { 
+        if (v = 0) { do DrawScore.draw_0(memory_pos + shift_x); } else { 
+        if (v = 1) { do DrawScore.draw_1(memory_pos + shift_x); } else { 
+        if (v = 2) { do DrawScore.draw_2(memory_pos + shift_x); } else { 
+        if (v = 3) { do DrawScore.draw_3(memory_pos + shift_x); } else { 
+        if (v = 4) { do DrawScore.draw_4(memory_pos + shift_x); } else { 
+        if (v = 5) { do DrawScore.draw_5(memory_pos + shift_x); } else { 
+        if (v = 6) { do DrawScore.draw_6(memory_pos + shift_x); } else { 
+        if (v = 7) { do DrawScore.draw_7(memory_pos + shift_x); } else { 
+        if (v = 8) { do DrawScore.draw_8(memory_pos + shift_x); } else { 
+        if (v = 9) { do DrawScore.draw_9(memory_pos + shift_x); } else { 
         }}}}}}}}}}
         return;
     }
