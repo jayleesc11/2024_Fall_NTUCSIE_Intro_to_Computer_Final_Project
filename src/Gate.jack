@@ -61,7 +61,7 @@ class Gate {
         let mem_pos = x1_init_mem + y1_mem;
         let sprite_seq = sprite_seq_init;
         let type = LCGRandom.randRange(1,6);
-        let input_rand = LCGRandom.randRange(0,1);
+        if (LCGRandom.randRange(0,1) = 0) {let input_rand = false;} else {let input_rand = true;}
         let exists = true;
         let erased = false;
         return;

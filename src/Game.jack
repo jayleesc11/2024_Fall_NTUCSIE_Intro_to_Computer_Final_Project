@@ -186,6 +186,7 @@ class Game {
                 let first_start = true;
                 let start = true;
                 do draw_upper();
+                do Score.printSCORE();
                 // LCGRandom seed set, set random values
                 do gate1_1.reset();
                 do gate1_2.reset();

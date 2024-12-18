@@ -3,6 +3,7 @@ class Score {
     static int digit_width;         // Bouunding box width
     static int double_digit_width;  // Double digit width
     static int memory_pos;          // Position in memory
+
     // Fields
     field int total;                // Total score
     field int digit2;               // Hundreds digit
@@ -12,7 +13,17 @@ class Score {
     function void init() {
         let digit_width = 2;
         let double_digit_width = digit_width + digit_width;
-        let memory_pos = 4;
+        let memory_pos = digit_width * 6;
+        return;
+    }
+
+    function void printSCORE() {
+        do DrawScore.draw_s(0);
+        do DrawScore.draw_c(digit_width);
+        do DrawScore.draw_o(double_digit_width);
+        do DrawScore.draw_r(double_digit_width + digit_width);
+        do DrawScore.draw_e(double_digit_width + double_digit_width);
+        do DrawScore.draw_z(double_digit_width + double_digit_width + digit_width);
         return;
     }
 
@@ -60,7 +71,7 @@ class Score {
                 do render(digit_width, digit0);
             }
             else {
-                if (total > 0) { do render(0, digit0); }
+                if (total > -1) { do render(0, digit0); }
             }
         }
         return;
