@@ -36,7 +36,7 @@ class Gate {
         let y_upper_margin = margin;
         let y_obs_height = obs_height;
 
-        let x_interval = ((512 - x_width) / 2) + x_width;                                       // 306
+        let x_interval = 256;
         let y_gate_interval = (256 - y_upper_margin - (y_obs_height * 2) - (y_height * 3)) / 6; // 10
         return;
     }
@@ -100,26 +100,6 @@ class Gate {
         if (type = 5) {let output = (input_stat & ~input_rand) | (~input_stat & input_rand);} else { 
         if (type = 6) {let output = (input_stat & input_rand) | (~input_stat & ~input_rand);} else { 
         let output = false;}}}}}}
-        return;
-    }
-
-    method void tick() {
-        if (x1 < -x_width) {
-            do rebuild();
-        } else {
-            let x1 = x1 - x_vel;
-            if (x1 = (512 - x_width)) {
-                if (type = 0) {
-                    do Screen.setColor(true);
-                    do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
-                }
-                let exists = true;
-                let erased = false;
-            }
-            if (x1 = 0) {
-                let exists = false;
-            }
-        }
         return;
     }
 
@@ -202,6 +182,26 @@ class Gate {
     }
 
     method void update() {
+        if (x1 = 0) {
+            let exists = false;
+            if (erased) { do rebuild(); }
+            else {
+                do Screen.setColor(false);
+                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
+                do rebuild();
+            }
+        } else {
+            let x1 = x1 - x_vel;
+            if (x1 = (512 - x_width)) {
+                if (type = 0) {
+                    do Screen.setColor(true);
+                    do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
+                }
+                let exists = true;
+                let erased = false;
+            }
+        }
+
         if (exists) {
             do draw();
         } else {if (~erased) {
@@ -209,7 +209,6 @@ class Gate {
             do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
             let erased = true;
         }}
-        do tick();
         return;
     }
 

@@ -23,7 +23,7 @@ class Player {
     function void init(int y_upper_margin) {
         let x_width = 16;
         let y_height = 44;
-        let x1_mem = 8;
+        let x1_mem = 4;
         let y_vel = 2;
         let frame_interval = 15;
 

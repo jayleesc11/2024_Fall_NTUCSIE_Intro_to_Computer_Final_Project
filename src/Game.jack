@@ -39,7 +39,7 @@ class Game {
     field int seed;
 
     function void init() {
-        let delay = 5;
+        let delay = 4;
         let y_upper_margin = 42;
         return;
     }
@@ -155,7 +155,7 @@ class Game {
         do obs1_2.update();
         do obs2_1.update();
         do obs2_2.update();
-        
+
         if (obs1_1.collision(player_x1, player_y1, player_x2, player_y2) |
             obs1_2.collision(player_x1, player_y1, player_x2, player_y2) |
             obs2_1.collision(player_x1, player_y1, player_x2, player_y2) |

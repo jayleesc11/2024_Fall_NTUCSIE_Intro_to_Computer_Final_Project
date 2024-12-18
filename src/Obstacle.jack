@@ -21,7 +21,7 @@ class Obstacle {
         let x_width = width;
         let y_upper_margin = margin;
 
-        let x_interval = ((512 - x_width) / 2) + x_width;           // 306
+        let x_interval = 256;
         let y_obs_interval = (256 - y_upper_margin - (2 * 2)) / 3;  // 70
         return;
     }
@@ -32,18 +32,18 @@ class Obstacle {
         let y1 = y_upper_margin + ((y_height + y_obs_interval) * y_index) - y_height;
         let y2 = y1 + y_height - 1;
         let exists = false;
-        let erased = true;
         return this;
     }
 
     method void reset() {
         let x1 = x1_init;
         let exists = false;
-        let erased = true;
         return;
     }
 
     method void rebuild() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
         do reset();
         let x1 = 512;
         return;
@@ -71,8 +71,8 @@ class Obstacle {
         return;
     }
 
-    method void tick() {
-        if (x1 < -x_width) {
+    method void update() {
+        if (x1 = 0) {
             do rebuild();
         } else {
             let x1 = x1 - x_vel;
@@ -80,24 +80,9 @@ class Obstacle {
                 do Screen.setColor(true);
                 do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
                 let exists = true;
-                let erased = false;
-            }
-            if (x1 = 0) {
-                let exists = false;
             }
         }
-        return;
-    }
-
-    method void update() {
-        if (exists) {
-            do draw();
-        } else {if (~erased) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
-            let erased = true;
-        }}
-        do tick();
+        if (exists) { do draw(); }
         return;
     }
     

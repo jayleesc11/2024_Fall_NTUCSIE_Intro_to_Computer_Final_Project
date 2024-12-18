@@ -2,6 +2,7 @@ class Score {
     // Constants
     static int digit_width;         // Bouunding box width
     static int double_digit_width;  // Double digit width
+    static int mem_offset;          // Position offset in memory
     static int memory_pos;          // Position in memory
 
     // Fields
@@ -11,19 +12,20 @@ class Score {
     field int digit0;               // Ones digit
 
     function void init() {
-        let digit_width = 2;
+        let digit_width = 1;
         let double_digit_width = digit_width + digit_width;
-        let memory_pos = digit_width * 6;
+        let mem_offset = 1 + (8 * 32);
+        let memory_pos = digit_width * 6 + mem_offset;
         return;
     }
 
     function void printSCORE() {
-        do DrawScore.draw_s(0);
-        do DrawScore.draw_c(digit_width);
-        do DrawScore.draw_o(double_digit_width);
-        do DrawScore.draw_r(double_digit_width + digit_width);
-        do DrawScore.draw_e(double_digit_width + double_digit_width);
-        do DrawScore.draw_z(double_digit_width + double_digit_width + digit_width);
+        do DrawScore.draw_s(mem_offset);
+        do DrawScore.draw_c(digit_width + mem_offset);
+        do DrawScore.draw_o(double_digit_width + mem_offset);
+        do DrawScore.draw_r(double_digit_width + digit_width + mem_offset);
+        do DrawScore.draw_e(double_digit_width + double_digit_width + mem_offset);
+        do DrawScore.draw_z(double_digit_width + double_digit_width + digit_width + mem_offset);
         return;
     }
 
