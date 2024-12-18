@@ -37,7 +37,7 @@ class Gate {
         let y_obs_height = obs_height;
 
         let x_interval = ((512 - x_width) / 2) + x_width;                                       // 306
-        let y_gate_interval = (255 - y_upper_margin - (y_obs_height * 2) - (y_height * 3)) / 6; // 10
+        let y_gate_interval = (256 - y_upper_margin - (y_obs_height * 2) - (y_height * 3)) / 6; // 10
         return;
     }
 
@@ -49,10 +49,10 @@ class Gate {
         let y1_mem = y1 * 32;
         let y2 = y1 + y_height - 1;
         let mem_pos = x1_init_mem + y1_mem;
-        let sprite_seq_init = 4;
+        let sprite_seq_init = 2;
         let sprite_seq = sprite_seq_init;
         let y_collision_lower = y1 - y_gate_interval;
-        let y_collision_upper = y1 + y_height + y_gate_interval;
+        let y_collision_upper = y1 + y_height - 1 + y_gate_interval;
         return this;
     }
 
@@ -60,10 +60,14 @@ class Gate {
         let x1 = x1_init;
         let mem_pos = x1_init_mem + y1_mem;
         let sprite_seq = sprite_seq_init;
-        let type = LCGRandom.randRange(1,6);
-        if (LCGRandom.randRange(0,1) = 0) {let input_rand = false;} else {let input_rand = true;}
-        let exists = true;
-        let erased = false;
+        let type = LCGRandom.randRange(0,6);
+        if (type = 0) {
+            let y1 = y_collision_lower;
+            let y2 = y_collision_upper;
+            let input_rand = false;
+        } else {if (LCGRandom.randRange(0,1) = 0) { let input_rand = false; } else {let input_rand = true;}}
+        let exists = false;
+        let erased = true;
         return;
     }
 
@@ -78,13 +82,14 @@ class Gate {
         return;
     }
     
-    method boolean collision(int player_x1, int player_y1, int player_x2, int player_y2, boolean player_state) {
+    method int collision(int player_x1, int player_y1, int player_x2, int player_y2, boolean player_state) {
         if (exists & (player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y_collision_upper) & (player_y2 > y_collision_lower)) {
+            if (type = 0) { return -1; }
             do logic(player_state);
             let exists = false;
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
 
     method void logic(boolean input_stat) {
@@ -99,90 +104,100 @@ class Gate {
     }
 
     method void tick() {
-        if (x1 + 1 < -x_width) {
+        if (x1 < -x_width) {
             do rebuild();
         } else {
             let x1 = x1 - x_vel;
-            /*if (~exists & (x1 < 102)) {
+            if (x1 = (512 - x_width)) {
+                if (type = 0) {
+                    do Screen.setColor(true);
+                    do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
+                }
                 let exists = true;
-            }*/
+                let erased = false;
+            }
+            if (x1 = 0) {
+                let exists = false;
+            }
         }
         return;
     }
 
     method void draw() {
-        do Screen.setColor(true);
-        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y2);
-        do Screen.setColor(false);
-        do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
-        /*
-        if (sprite_seq = 0) {
-            let sprite_seq = 7;
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
-        } else {
+        if (type = 0) {
+            do Screen.setColor(true);
+            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y2);
+            do Screen.setColor(false);
+            do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
+            return;
+        }
         if (sprite_seq = 1) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_2(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_2(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_2(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_2(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_2(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_2(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 2) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_4(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_4(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_4(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_4(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_4(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_4(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 3) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_6(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_6(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_6(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_6(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_6(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_6(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 4) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_8(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_8(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_8(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_8(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_8(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_8(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 5) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_10(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_10(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_10(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_10(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_10(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_10(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 6) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
+            if (type = 1) { do DrawGate.draw_and_12(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_12(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_12(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_12(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_12(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_12(mem_pos); } }}}}}
         } else {
         if (sprite_seq = 7) {
-            if (type = 1) {} else {
-            if (type = 2) {} else {
-            if (type = 3) {} else {
-            if (type = 4) {} else {
-            if (type = 5) {} else {
-            if (type = 6) {} }}}}}
-        }}}}}}}
-        let sprite_seq = sprite_seq - 1;
-        */
+            if (type = 1) { do DrawGate.draw_and_14(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_14(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_14(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_14(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_14(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_14(mem_pos); } }}}}}
+        } else {
+        if (sprite_seq = 8) {
+            if (type = 1) { do DrawGate.draw_and_16(mem_pos); } else {
+            if (type = 2) { do DrawGate.draw_nand_16(mem_pos); } else {
+            if (type = 3) { do DrawGate.draw_or_16(mem_pos); } else {
+            if (type = 4) { do DrawGate.draw_nor_16(mem_pos); } else {
+            if (type = 5) { do DrawGate.draw_xor_16(mem_pos); } else {
+            if (type = 6) { do DrawGate.draw_xnor_16(mem_pos); } }}}}}
+            let sprite_seq = 0;
+            let mem_pos = mem_pos - 1;
+        }}}}}}}}
+        let sprite_seq = sprite_seq + 1;
         return;
     }
 
@@ -190,11 +205,10 @@ class Gate {
         if (exists) {
             do draw();
         } else {if (~erased) {
-                do Screen.setColor(false);
-                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width+ x_vel,0),511), y1 + y_height);
-                let erased = true;
-            }
-        }
+            do Screen.setColor(false);
+            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
+            let erased = true;
+        }}
         do tick();
         return;
     }

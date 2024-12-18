@@ -12,6 +12,8 @@ class Obstacle {
     field int x1_init;          // Initial x1 position on screen (constant)
     field int y1;               // y1 position on screen (constant)
     field int y2;               // y2 position on screen (constant)
+    field boolean exists;       // Obstacle exists
+    field boolean erased;       // Obstacle erased
 
     function void init(int margin, int width) {
         let y_height = 2;
@@ -20,7 +22,7 @@ class Obstacle {
         let y_upper_margin = margin;
 
         let x_interval = ((512 - x_width) / 2) + x_width;           // 306
-        let y_obs_interval = (255 - y_upper_margin - (2 * 2)) / 3;  // 70
+        let y_obs_interval = (256 - y_upper_margin - (2 * 2)) / 3;  // 70
         return;
     }
 
@@ -29,11 +31,21 @@ class Obstacle {
         let x1 = x1_init;
         let y1 = y_upper_margin + ((y_height + y_obs_interval) * y_index) - y_height;
         let y2 = y1 + y_height - 1;
+        let exists = false;
+        let erased = true;
         return this;
     }
 
     method void reset() {
         let x1 = x1_init;
+        let exists = false;
+        let erased = true;
+        return;
+    }
+
+    method void rebuild() {
+        do reset();
+        let x1 = 512;
         return;
     }
 
@@ -60,16 +72,31 @@ class Obstacle {
     }
 
     method void tick() {
-        if (x1 + 1 < -x_width) {
-            let x1 = 512;
+        if (x1 < -x_width) {
+            do rebuild();
         } else {
             let x1 = x1 - x_vel;
+            if (x1 = (512 - x_width)) {
+                do Screen.setColor(true);
+                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
+                let exists = true;
+                let erased = false;
+            }
+            if (x1 = 0) {
+                let exists = false;
+            }
         }
         return;
     }
 
     method void update() {
-        do draw();
+        if (exists) {
+            do draw();
+        } else {if (~erased) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
+            let erased = true;
+        }}
         do tick();
         return;
     }

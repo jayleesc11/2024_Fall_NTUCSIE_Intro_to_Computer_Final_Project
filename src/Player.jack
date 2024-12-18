@@ -29,11 +29,11 @@ class Player {
 
         let x1 = x1_mem * 16;
         let x2 = x1 + x_width;
-        let y1_init = y_upper_margin + ((255 - y_upper_margin - y_height) / 2); // 126
+        let y1_init = y_upper_margin - 1 + ((256 - y_upper_margin - y_height) / 2); // 126
         let y1_init_mem = y1_init * 32;
         let y_vel_mem = y_vel * 32;
-        let y_screen_lower_bound = y_upper_margin + 1;                          // 42
-        let y_screen_upper_bound = 256 - y_height;                              // 212
+        let y_screen_lower_bound = y_upper_margin;                                  // 42
+        let y_screen_upper_bound = 256 - y_height;                                  // 212
         return;
     }
 

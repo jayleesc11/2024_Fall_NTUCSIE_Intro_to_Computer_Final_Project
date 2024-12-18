@@ -25,6 +25,7 @@ class Game {
     field boolean first_start;
     field boolean start;
     field boolean pause;
+    field int gate_collision_state;
 
     // Player data
     field int player_x1;        // constant
@@ -38,8 +39,8 @@ class Game {
     field int seed;
 
     function void init() {
-        let delay = 9;
-        let y_upper_margin = 41;
+        let delay = 5;
+        let y_upper_margin = 42;
         return;
     }
 
@@ -71,10 +72,13 @@ class Game {
         let obs2_1 = Obstacle.new(2,1);
         let obs2_2 = Obstacle.new(2,2);
 
+        let key = 0;
+        let last_key = 0;
         let first_start = false;
         let start = false;
+        let pause = false;
+        let gate_collision_state = 0;
         let seed = 0;
-        let last_key = 0;
         return this;
     }
 
@@ -129,7 +133,8 @@ class Game {
 
     method void draw_upper() {
         do Screen.setColor(true);
-        do Screen.drawRectangle(0, y_upper_margin - 1, 511, y_upper_margin);
+        do Screen.drawRectangle(0, y_upper_margin - 2, 511, y_upper_margin - 1);
+        do Score.printSCORE();
         return;
     }
 
@@ -158,19 +163,24 @@ class Game {
             let start = false;
         }
 
-        if (gate1_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
-            gate1_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
-            gate1_3.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
-            gate2_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
-            gate2_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
-            gate2_3.collision(player_x1, player_y1, player_x2, player_y2, player_value)) {
+        let gate_collision_state = 
+        gate1_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+        gate1_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+        gate1_3.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+        gate2_1.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+        gate2_2.collision(player_x1, player_y1, player_x2, player_y2, player_value) |
+        gate2_3.collision(player_x1, player_y1, player_x2, player_y2, player_value);
+
+        if (gate_collision_state = -1) {
+            let start = false;
+        } else {if (gate_collision_state = 1) {
             do player.setVal(Gate.output());
             let player_value = player.value();
             if (~player_last_value & player_value) {
                 do score.increment();
             }
             let player_last_value = player_value;
-        }
+        }}
         return;
     }
 
@@ -186,7 +196,6 @@ class Game {
                 let first_start = true;
                 let start = true;
                 do draw_upper();
-                do Score.printSCORE();
                 // LCGRandom seed set, set random values
                 do gate1_1.reset();
                 do gate1_2.reset();
