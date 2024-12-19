@@ -3,10 +3,10 @@ class Player {
     static int x_width;                 // Bounding box width
     static int y_height;                // Bounding box height
     static int x1_mem;                  // (Initial) x1 position in memory
-    static int x1;                      // x1 position on screen
-    static int x2;                      // x2 position on screen
+    static int x1;                      // (Initial) x1 position on screen
+    static int x2;                      // (Initial) x2 position on screen
     static int y1_init;                 // Initial y1 position on screen
-    static int y1_init_mem;             // Initial y1 position in memory
+    static int mem_pos_init;            // Initial position in memory
     static int y_vel;                   // Movement speed on screen
     static int y_vel_mem;               // Movement speed in memory
     static int y_screen_lower_bound;    // Lower bound of y1 position on screen
@@ -21,6 +21,8 @@ class Player {
     field boolean value;                // Player's value
 
     function void init(int y_upper_margin) {
+        var int x_width, x1_mem;
+
         let x_width = 16;
         let y_height = 44;
         let x1_mem = 4;
@@ -28,9 +30,9 @@ class Player {
         let frame_interval = 15;
 
         let x1 = x1_mem * 16;
-        let x2 = x1 + x_width;
+        let x2 = x1 + x_width - 1;
         let y1_init = y_upper_margin - 1 + ((256 - y_upper_margin - y_height) / 2); // 126
-        let y1_init_mem = y1_init * 32;
+        let mem_pos_init = x1_mem + (y1_init * 32);
         let y_vel_mem = y_vel * 32;
         let y_screen_lower_bound = y_upper_margin;                                  // 42
         let y_screen_upper_bound = 256 - y_height;                                  // 212
@@ -44,7 +46,7 @@ class Player {
 
     method void reset() {
         let y1 = y1_init;
-        let mem_pos = x1_mem + y1_init_mem;
+        let mem_pos = mem_pos_init;
         let tick = 0;
         let skin = false;
         let value = false;
@@ -76,16 +78,7 @@ class Player {
         return;
     }
 
-    method void tick() {
-        let tick = tick + 1;
-        if (tick = frame_interval) {
-            let tick = 0;
-            let skin = ~skin;
-        }
-        return;
-    }
-
-    method void render() {
+    method void update() {
         if (value) {
             if (skin) {
                 do SpriteManager.draw_player1_1(mem_pos);
@@ -99,12 +92,12 @@ class Player {
                 do SpriteManager.draw_player0_0(mem_pos);
             }
         }
-        return;
-    }
 
-    method void update() {
-        do render();
-        do tick();
+        let tick = tick + 1;
+        if (tick = frame_interval) {
+            let tick = 0;
+            let skin = ~skin;
+        }
         return;
     }
 

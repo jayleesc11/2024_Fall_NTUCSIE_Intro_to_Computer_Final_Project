@@ -1,79 +1,54 @@
 class Gate {
     // Constants
+    static int x1_init_mem;        // Initial x1 position in memory
+    static int x_width_mem;         // Width of gates in memory
     static int x_width;             // Width of gates
     static int y_height;            // Height of gates
     static int x_vel;               // Movement speed on screen
-    static int x_interval;          // Interval between gates x1's
-    static int y_upper_margin;      // Upper margin of obstacles
-    static int y_obs_height;        // Height of obstacles
-    static int y_gate_interval;     // Interval between gates y1's
+    static int y_gate_halfinter;    // Half interval between gates
 
     // Static
     static boolean output;           // Gate output
 
     // Fields
-    field int x1;                   // x1 position on screen
-    field int x1_init;              // Initial x1 position on screen
-    field int x1_init_mem;          // Initial x1 position in memory
-    field int y1;                   // (Initial) y1 position on screen
-    field int y1_mem;               // (Initial) y1 position in memory
-    field int y2;                   // (Initial) y2 position on screen
+    field int y_lower_bound;        // Lower collision bound of the gate
+    field int y_upper_bound;        // Upper collision bound of the gate
     field int mem_pos;              // Position in memory
+    field int mem_pos_init;         // Initial position in memory
     field int sprite_seq;           // Sprite sequence
     field int sprite_seq_init;      // Initial sprite sequence
-    field int y_collision_upper;    // Collision upper bound
-    field int y_collision_lower;    // Collision lower bound
 
+    field boolean exists;           // Gate exists
     field int type;                 // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
     field boolean input_rand;       // Input 2
-    field boolean exists;           // Gate exists
-    field boolean erased;           // Gate erased
 
-    function void init(int margin, int obs_height) {
-        let x_width = 100;
-        let y_height = 50;
-        let x_vel = 2;
-        let y_upper_margin = margin;
-        let y_obs_height = obs_height;
-
-        let x_interval = 256;
-        let y_gate_interval = (256 - y_upper_margin - (y_obs_height * 2) - (y_height * 3)) / 6; // 10
+    function void init(int width_mem, int width, int height, int vel, int inter) {
+        let x1_init_mem = 25;
+        let x_width_mem = width_mem;
+        let x_width = width;
+        let y_height = height;
+        let x_vel = vel;
+        let y_gate_halfinter = inter;
         return;
     }
 
-    constructor Gate new(int x_index, int y_index) {
-        let x1_init = 512 + (x_interval * (x_index - 1));
-        let x1 = x1_init;
-        let x1_init_mem = 25;
-        let y1 = y_upper_margin + y_gate_interval + ((y_height + y_obs_height + (y_gate_interval * 2)) * (y_index - 1));
-        let y1_mem = y1 * 32;
-        let y2 = y1 + y_height - 1;
-        let mem_pos = x1_init_mem + y1_mem;
+    constructor Gate new(int y1_init, int y2_init) {
+        let y_lower_bound = y1_init - y_gate_halfinter;
+        let y_upper_bound = y2_init + y_gate_halfinter;
+        let mem_pos_init = x1_init_mem + (y1_init * 32);
+        let mem_pos = mem_pos_init;
         let sprite_seq_init = 2;
         let sprite_seq = sprite_seq_init;
-        let y_collision_lower = y1 - y_gate_interval;
-        let y_collision_upper = y1 + y_height - 1 + y_gate_interval;
+        let exists = false;
         return this;
     }
 
-    method void reset() {
-        let x1 = x1_init;
-        let mem_pos = x1_init_mem + y1_mem;
-        let sprite_seq = sprite_seq_init;
-        let type = LCGRandom.randRange(0,6);
-        if (type = 0) {
-            let y1 = y_collision_lower;
-            let y2 = y_collision_upper;
-            let input_rand = false;
-        } else {if (LCGRandom.randRange(0,1) = 0) { let input_rand = false; } else {let input_rand = true;}}
+    method void reset(int itype) {
         let exists = false;
-        let erased = true;
-        return;
-    }
-
-    method void rebuild() {
-        do reset();
-        let x1 = 512;
+        let mem_pos = mem_pos_init;
+        let sprite_seq = sprite_seq_init;
+        let type = itype;
+        if (LCGRandom.randRange(0,1) = 0) { let input_rand = false; } else { let input_rand = true; }
         return;
     }
 
@@ -82,136 +57,149 @@ class Gate {
         return;
     }
     
-    method int collision(int player_x1, int player_y1, int player_x2, int player_y2, boolean player_state) {
-        if (exists & (player_x1 < (x1 + x_width)) & (player_x2 > x1) & (player_y1 < y_collision_upper) & (player_y2 > y_collision_lower)) {
-            if (type = 0) { return -1; }
+    method boolean collision(boolean player_state) {
+        if (type = 0) { return true; }
+        // else
+        if (exists) {
             do logic(player_state);
-            let exists = false;
-            return 1;
+            do eraseGate();
         }
-        return 0;
+        return false;
     }
 
     method void logic(boolean input_stat) {
-        if (type = 1) {let output = input_stat & input_rand;} else { 
-        if (type = 2) {let output = ~(input_stat & input_rand);} else { 
-        if (type = 3) {let output = input_stat | input_rand;} else { 
-        if (type = 4) {let output = ~(input_stat | input_rand);} else { 
-        if (type = 5) {let output = (input_stat & ~input_rand) | (~input_stat & input_rand);} else { 
-        if (type = 6) {let output = (input_stat & input_rand) | (~input_stat & ~input_rand);} else { 
-        let output = false;}}}}}}
+        if (type = 1) { let output = input_stat & input_rand;                                 } else {
+        if (type = 2) { let output = ~(input_stat & input_rand);                              } else {
+        if (type = 3) { let output = input_stat | input_rand;                                 } else {
+        if (type = 4) { let output = ~(input_stat | input_rand);                              } else {
+        if (type = 5) { let output = (input_stat & ~input_rand) | (~input_stat & input_rand); } else {
+        if (type = 6) { let output = (input_stat & input_rand) | (~input_stat & ~input_rand); } else {
+                        let output = false; }}}}}}
         return;
     }
 
-    method void draw() {
-        if (type = 0) {
-            do Screen.setColor(true);
-            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_vel,0),511), y2);
-            do Screen.setColor(false);
-            do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
-            return;
-        }
-        if (sprite_seq = 1) {
-            if (type = 1) { do DrawGate.draw_and_2(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_2(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_2(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_2(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_2(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_2(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 2) {
-            if (type = 1) { do DrawGate.draw_and_4(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_4(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_4(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_4(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_4(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_4(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 3) {
-            if (type = 1) { do DrawGate.draw_and_6(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_6(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_6(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_6(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_6(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_6(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 4) {
-            if (type = 1) { do DrawGate.draw_and_8(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_8(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_8(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_8(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_8(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_8(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 5) {
-            if (type = 1) { do DrawGate.draw_and_10(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_10(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_10(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_10(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_10(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_10(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 6) {
-            if (type = 1) { do DrawGate.draw_and_12(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_12(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_12(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_12(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_12(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_12(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 7) {
-            if (type = 1) { do DrawGate.draw_and_14(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_14(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_14(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_14(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_14(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_14(mem_pos); } }}}}}
-        } else {
-        if (sprite_seq = 8) {
-            if (type = 1) { do DrawGate.draw_and_16(mem_pos); } else {
-            if (type = 2) { do DrawGate.draw_nand_16(mem_pos); } else {
-            if (type = 3) { do DrawGate.draw_or_16(mem_pos); } else {
-            if (type = 4) { do DrawGate.draw_nor_16(mem_pos); } else {
-            if (type = 5) { do DrawGate.draw_xor_16(mem_pos); } else {
-            if (type = 6) { do DrawGate.draw_xnor_16(mem_pos); } }}}}}
-            let sprite_seq = 0;
-            let mem_pos = mem_pos - 1;
-        }}}}}}}}
-        let sprite_seq = sprite_seq + 1;
-        return;
-    }
-
-    method void update() {
-        if (x1 = 0) {
-            let exists = false;
-            if (erased) { do rebuild(); }
-            else {
+    method void update(int x1) {
+        if (exists) { 
+            if (type = 0) {
+                do Screen.setColor(true);
+                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y_lower_bound, Math.min(Math.max(x1 + x_vel,0),511), y_upper_bound);
                 do Screen.setColor(false);
-                do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
-                do rebuild();
+                do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y_lower_bound, Math.min(Math.max(x1 + x_width + x_vel,0),511), y_upper_bound);
+                return;
             }
-        } else {
-            let x1 = x1 - x_vel;
-            if (x1 = (512 - x_width)) {
-                if (type = 0) {
-                    do Screen.setColor(true);
-                    do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width,0),511), y2);
-                }
-                let exists = true;
-                let erased = false;
-            }
+            // else
+            if (sprite_seq = 1) {
+                if (type = 1) { do DrawGate.draw_and_2(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_2(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_2(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_2(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_2(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_2(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 2) {
+                if (type = 1) { do DrawGate.draw_and_4(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_4(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_4(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_4(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_4(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_4(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 3) {
+                if (type = 1) { do DrawGate.draw_and_6(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_6(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_6(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_6(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_6(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_6(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 4) {
+                if (type = 1) { do DrawGate.draw_and_8(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_8(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_8(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_8(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_8(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_8(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 5) {
+                if (type = 1) { do DrawGate.draw_and_10(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_10(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_10(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_10(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_10(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_10(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 6) {
+                if (type = 1) { do DrawGate.draw_and_12(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_12(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_12(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_12(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_12(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_12(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 7) {
+                if (type = 1) { do DrawGate.draw_and_14(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_14(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_14(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_14(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_14(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_14(mem_pos); } }}}}}
+            } else {
+            if (sprite_seq = 8) {
+                if (type = 1) { do DrawGate.draw_and_16(mem_pos);  } else {
+                if (type = 2) { do DrawGate.draw_nand_16(mem_pos); } else {
+                if (type = 3) { do DrawGate.draw_or_16(mem_pos);   } else {
+                if (type = 4) { do DrawGate.draw_nor_16(mem_pos);  } else {
+                if (type = 5) { do DrawGate.draw_xor_16(mem_pos);  } else {
+                if (type = 6) { do DrawGate.draw_xnor_16(mem_pos); } }}}}}
+                let sprite_seq = 0;
+                let mem_pos = mem_pos - 1;
+            }}}}}}}}
+            let sprite_seq = sprite_seq + 1;
         }
-
-        if (exists) {
-            do draw();
-        } else {if (~erased) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1, Math.min(Math.max(x1 + x_width + x_vel,0),511), y2);
-            let erased = true;
-        }}
         return;
     }
 
-    function int width() { return x_width; }
+    method void appearGate() {
+        var int draw_pos, draw_end, column_count;
+        if (type = 0) {
+            let draw_pos = 16384 + mem_pos - (y_gate_halfinter * 32);
+            let draw_end = 16384 + mem_pos + ((y_height - 1 + y_gate_halfinter) * 32) + 1;
+            while(draw_pos < draw_end) {
+                let column_count = 0;
+                while(column_count < x_width_mem) {
+                    do Memory.poke(draw_pos + column_count, -1);
+                    let column_count = column_count + 1;
+                }
+                let draw_pos = draw_pos + 32;
+            }
+            let mem_pos = mem_pos - x1_init_mem;
+        }
+        let exists = true;
+        return;
+    }
+
+    method void eraseGate() {
+        var int draw_pos, draw_end, column_count;
+        if (exists) { 
+            if (type = 0) {
+                let draw_pos = 16384 + mem_pos - (y_gate_halfinter * 32);
+                let draw_end = 16384 + mem_pos + ((y_height - 1 + y_gate_halfinter) * 32) + 1;
+            } else {
+                let draw_pos = 16384 + mem_pos;
+                let draw_end = 16384 + mem_pos + ((y_height - 1)  * 32) + 1;
+            }
+            while(draw_pos < draw_end) {
+                let column_count = 0;
+                while(column_count < x_width_mem) {
+                    do Memory.poke(draw_pos + column_count, 0);
+                    let column_count = column_count + 1;
+                }
+                let draw_pos = draw_pos + 32;
+            }
+            let exists = false;
+        }
+        return;
+    }
+
     function boolean output() { return output; }
 }

@@ -2,8 +2,8 @@ class Score {
     // Constants
     static int digit_width;         // Bouunding box width
     static int double_digit_width;  // Double digit width
+    static int mem_pos;             // Position in memory
     static int mem_offset;          // Position offset in memory
-    static int memory_pos;          // Position in memory
 
     // Fields
     field int total;                // Total score
@@ -15,7 +15,7 @@ class Score {
         let digit_width = 1;
         let double_digit_width = digit_width + digit_width;
         let mem_offset = 1 + (8 * 32);
-        let memory_pos = digit_width * 6 + mem_offset;
+        let mem_pos = digit_width * 6 + mem_offset;
         return;
     }
 
@@ -48,17 +48,16 @@ class Score {
     }
 
     method void render(int shift_x, int v) {
-        if (v = 0) { do DrawScore.draw_0(memory_pos + shift_x); } else { 
-        if (v = 1) { do DrawScore.draw_1(memory_pos + shift_x); } else { 
-        if (v = 2) { do DrawScore.draw_2(memory_pos + shift_x); } else { 
-        if (v = 3) { do DrawScore.draw_3(memory_pos + shift_x); } else { 
-        if (v = 4) { do DrawScore.draw_4(memory_pos + shift_x); } else { 
-        if (v = 5) { do DrawScore.draw_5(memory_pos + shift_x); } else { 
-        if (v = 6) { do DrawScore.draw_6(memory_pos + shift_x); } else { 
-        if (v = 7) { do DrawScore.draw_7(memory_pos + shift_x); } else { 
-        if (v = 8) { do DrawScore.draw_8(memory_pos + shift_x); } else { 
-        if (v = 9) { do DrawScore.draw_9(memory_pos + shift_x); } else { 
-        }}}}}}}}}}
+        if (v = 0) { do DrawScore.draw_0(mem_pos + shift_x); } else { 
+        if (v = 1) { do DrawScore.draw_1(mem_pos + shift_x); } else { 
+        if (v = 2) { do DrawScore.draw_2(mem_pos + shift_x); } else { 
+        if (v = 3) { do DrawScore.draw_3(mem_pos + shift_x); } else { 
+        if (v = 4) { do DrawScore.draw_4(mem_pos + shift_x); } else { 
+        if (v = 5) { do DrawScore.draw_5(mem_pos + shift_x); } else { 
+        if (v = 6) { do DrawScore.draw_6(mem_pos + shift_x); } else { 
+        if (v = 7) { do DrawScore.draw_7(mem_pos + shift_x); } else { 
+        if (v = 8) { do DrawScore.draw_8(mem_pos + shift_x); } else { 
+        if (v = 9) { do DrawScore.draw_9(mem_pos + shift_x); }}}}}}}}}}
         return;
     }
 
@@ -67,15 +66,11 @@ class Score {
             do render(0, digit2);
             do render(digit_width, digit1);
             do render(double_digit_width, digit0);
-        } else {
-            if (total > 9) {
-                do render(0, digit1);
-                do render(digit_width, digit0);
-            }
-            else {
-                if (total > -1) { do render(0, digit0); }
-            }
+        } else {if (total > 9) {
+            do render(0, digit1);
+            do render(digit_width, digit0);
         }
+        else {if (total > -1) { do render(0, digit0); }}}
         return;
     }
 
