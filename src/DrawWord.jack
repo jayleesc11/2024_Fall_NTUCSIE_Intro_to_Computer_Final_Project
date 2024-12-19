@@ -1,4 +1,4 @@
-class DrawScore{
+class DrawWord {
 	function void draw_0(int location) {
 		var int memAddress;
 		let memAddress = 16384+location;

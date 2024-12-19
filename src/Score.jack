@@ -1,9 +1,9 @@
 class Score {
     // Constants
-    static int digit_width;         // Bouunding box width
-    static int double_digit_width;  // Double digit width
-    static int mem_pos;             // Position in memory
-    static int mem_offset;          // Position offset in memory
+    static int word_width;          // Width of a word
+    static int double_word_width;   // Width of two words
+    static int number_mem_offset;   // Memory offset for numbers
+    static int score_mem_offset;    // Memory offset for "SCORE"
 
     // Fields
     field int total;                // Total score
@@ -12,20 +12,20 @@ class Score {
     field int digit0;               // Ones digit
 
     function void init() {
-        let digit_width = 1;
-        let double_digit_width = digit_width + digit_width;
-        let mem_offset = 1 + (8 * 32);
-        let mem_pos = digit_width * 6 + mem_offset;
+        let word_width = 1;
+        let double_word_width = word_width + word_width;
+        let score_mem_offset = 1 + (8 * 32);
+        let number_mem_offset = word_width * 6 + score_mem_offset;
         return;
     }
 
     function void printSCORE() {
-        do DrawScore.draw_s(mem_offset);
-        do DrawScore.draw_c(digit_width + mem_offset);
-        do DrawScore.draw_o(double_digit_width + mem_offset);
-        do DrawScore.draw_r(double_digit_width + digit_width + mem_offset);
-        do DrawScore.draw_e(double_digit_width + double_digit_width + mem_offset);
-        do DrawScore.draw_z(double_digit_width + double_digit_width + digit_width + mem_offset);
+        do DrawWord.draw_s(score_mem_offset);
+        do DrawWord.draw_c(word_width + score_mem_offset);
+        do DrawWord.draw_o(word_width * 2 + score_mem_offset);
+        do DrawWord.draw_r(word_width * 3 + score_mem_offset);
+        do DrawWord.draw_e(word_width * 4 + score_mem_offset);
+        do DrawWord.draw_z(word_width * 5 + score_mem_offset);
         return;
     }
 
@@ -48,27 +48,27 @@ class Score {
     }
 
     method void render(int shift_x, int v) {
-        if (v = 0) { do DrawScore.draw_0(mem_pos + shift_x); } else { 
-        if (v = 1) { do DrawScore.draw_1(mem_pos + shift_x); } else { 
-        if (v = 2) { do DrawScore.draw_2(mem_pos + shift_x); } else { 
-        if (v = 3) { do DrawScore.draw_3(mem_pos + shift_x); } else { 
-        if (v = 4) { do DrawScore.draw_4(mem_pos + shift_x); } else { 
-        if (v = 5) { do DrawScore.draw_5(mem_pos + shift_x); } else { 
-        if (v = 6) { do DrawScore.draw_6(mem_pos + shift_x); } else { 
-        if (v = 7) { do DrawScore.draw_7(mem_pos + shift_x); } else { 
-        if (v = 8) { do DrawScore.draw_8(mem_pos + shift_x); } else { 
-        if (v = 9) { do DrawScore.draw_9(mem_pos + shift_x); }}}}}}}}}}
+        if (v = 0) { do DrawWord.draw_0(number_mem_offset + shift_x); } else { 
+        if (v = 1) { do DrawWord.draw_1(number_mem_offset + shift_x); } else { 
+        if (v = 2) { do DrawWord.draw_2(number_mem_offset + shift_x); } else { 
+        if (v = 3) { do DrawWord.draw_3(number_mem_offset + shift_x); } else { 
+        if (v = 4) { do DrawWord.draw_4(number_mem_offset + shift_x); } else { 
+        if (v = 5) { do DrawWord.draw_5(number_mem_offset + shift_x); } else { 
+        if (v = 6) { do DrawWord.draw_6(number_mem_offset + shift_x); } else { 
+        if (v = 7) { do DrawWord.draw_7(number_mem_offset + shift_x); } else { 
+        if (v = 8) { do DrawWord.draw_8(number_mem_offset + shift_x); } else { 
+        if (v = 9) { do DrawWord.draw_9(number_mem_offset + shift_x); }}}}}}}}}}
         return;
     }
 
     method void show() {
         if (total > 99) {
             do render(0, digit2);
-            do render(digit_width, digit1);
-            do render(double_digit_width, digit0);
+            do render(word_width, digit1);
+            do render(double_word_width, digit0);
         } else {if (total > 9) {
             do render(0, digit1);
-            do render(digit_width, digit0);
+            do render(word_width, digit0);
         }
         else {if (total > -1) { do render(0, digit0); }}}
         return;
