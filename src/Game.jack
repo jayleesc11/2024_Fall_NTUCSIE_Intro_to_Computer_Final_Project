@@ -128,10 +128,10 @@ class Game {
         do DrawWord.draw_a(word_width + offset1);
         do DrawWord.draw_m(word_width * 2 + offset1);
         do DrawWord.draw_e(word_width * 3 + offset1);
-        //do DrawWord.draw_p(word_width * 4 + offset1);
-        //do DrawWord.draw_l(word_width * 5 + offset1);
+        do DrawWord.draw_p(word_width * 4 + offset1);
+        do DrawWord.draw_l(word_width * 5 + offset1);
         do DrawWord.draw_a(word_width * 6 + offset1);
-        //do DrawWord.draw_y(word_width * 7 + offset1);
+        do DrawWord.draw_y(word_width * 7 + offset1);
         do Screen.setColor(true);
         do Screen.drawRectangle(170, 35, 310, 36);
         let offset2 = 2 + (52 * 32);
@@ -152,11 +152,11 @@ class Game {
         do DrawWord.draw_1(word_width * 10 + offset3);
         do DrawWord.draw_0(word_width * 11 + offset3);
         let offset4 = offset3 + (40 * 32);
-        //do DrawWord.draw_l(offset4);
+        do DrawWord.draw_l(offset4);
         do DrawWord.draw_e(word_width + offset4);
         do DrawWord.draw_v(word_width * 2 + offset4);
         do DrawWord.draw_e(word_width * 3 + offset4);
-        //do DrawWord.draw_l(word_width * 4 + offset4);
+        do DrawWord.draw_l(word_width * 4 + offset4);
         do DrawWord.draw_z(word_width * 5 + offset4);
         do DrawWord.draw_0(word_width * 6 + offset4);
         do DrawOther.draw_smallarrow(offset4 + (word_width * 8) + (6 * 32));
