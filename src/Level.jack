@@ -44,7 +44,12 @@ class Level {
         if (level = 1) { do DrawWord.draw_1(number_mem_offset); } else { 
         if (level = 2) { do DrawWord.draw_2(number_mem_offset); } else { 
         if (level = 3) { do DrawWord.draw_3(number_mem_offset); } else { 
-        do DrawWord.draw_4(number_mem_offset); }}}}
+        if (level = 4) { do DrawWord.draw_4(number_mem_offset); } else {
+        if (level = 5) { do DrawWord.draw_5(number_mem_offset); } else {
+        if (level = 6) { do DrawWord.draw_6(number_mem_offset); } else {
+        if (level = 7) { do DrawWord.draw_7(number_mem_offset); } else {
+        if (level = 8) { do DrawWord.draw_8(number_mem_offset); } else {
+        do DrawWord.draw_9(number_mem_offset); }}}}}}}}}
         return;
     }
 
