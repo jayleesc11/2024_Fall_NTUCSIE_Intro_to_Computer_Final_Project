@@ -35,27 +35,17 @@ class LCGRandom {
     function int rand() {
         var int test;
         let test = (A * (LCGRandom.mod(seed, Q)))-(R * (seed / Q));
-        if(test < 0) {
-            let seed = test + M;
-        }
-        else {
-            let seed = test;
-        }
+        if(test < 0) { let seed = test + M; } 
+        else { let seed = test;}
         return seed;
     }
 
     /* returns a random int in range low..high inclusive */
     function int randRange(int low, int high) {
-        var int scale;
-        let scale = (M / (high - low + 1));
-        return (LCGRandom.rand() / scale) + low;
+        return (LCGRandom.rand() / (M / (high - low + 1))) + low;
     }
 
     function int mod(int a, int b) {
-        var int q;
-        var int r;
-        let q = (a / b);
-        let r = a - (b * q);
-        return r;
+        return a - (b * (a / b));
     }
 }

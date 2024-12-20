@@ -1,0 +1,56 @@
+class Level {
+    // Static
+    static int word_width;          // Width of a word
+    static int level_mem_offset;    // Memory offset for "LEVEL:"
+    static int number_mem_offset;   // Memory offset for number drawing
+
+    // Fields
+    field int level;
+
+    function void init(int width) {
+        let word_width = width;
+        let level_mem_offset = 24 + (8 * 32);
+        let number_mem_offset = word_width * 6 + level_mem_offset;
+        return;
+    }
+
+    function void printLEVEL() {
+        //do DrawWord.draw_l(level_mem_offset);
+        do DrawWord.draw_e(word_width + level_mem_offset);
+        //do DrawWord.draw_v(word_width * 2 + level_mem_offset);
+        do DrawWord.draw_e(word_width * 3 + level_mem_offset);
+        //do DrawWord.draw_l(word_width * 4 + level_mem_offset);
+        do DrawWord.draw_z(word_width * 5 + level_mem_offset);
+        return;
+    }
+
+    constructor Level new() {
+        do reset();
+        return this;
+    }
+
+    method void reset() {
+        let level = 0;
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void show() {
+        if (level = 0) { do DrawWord.draw_0(number_mem_offset); } else { 
+        if (level = 1) { do DrawWord.draw_1(number_mem_offset); } else { 
+        if (level = 2) { do DrawWord.draw_2(number_mem_offset); } else { 
+        if (level = 3) { do DrawWord.draw_3(number_mem_offset); } else { 
+        do DrawWord.draw_4(number_mem_offset); }}}}
+        return;
+    }
+
+    method void increment() {
+        let level = level + 1;
+        do show();
+        return;
+    }
+}

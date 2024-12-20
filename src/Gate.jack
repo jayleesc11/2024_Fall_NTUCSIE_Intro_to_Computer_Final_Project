@@ -85,6 +85,8 @@ class Gate {
                 do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y_lower_bound, Math.min(Math.max(x1 + x_vel,0),511), y_upper_bound);
                 do Screen.setColor(false);
                 do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y_lower_bound, Math.min(Math.max(x1 + x_width + x_vel,0),511), y_upper_bound);
+                // For balancing the speed of null gates
+                do Sys.wait(2);
                 return;
             }
             // else

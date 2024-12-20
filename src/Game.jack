@@ -1,15 +1,19 @@
 class Game {
     // Constants
-    static int delay;
+    static int word_width;
+    static int delay_init;
+    static int score_per_level;
     static int y_upper_margin;
 
     // Objects
     field Score score;
+    field Level level;
     field Player player;
     field Obstacle obs1;
     field Obstacle obs2;
 
     // Internal states
+    field int delay;
     field char key;
     field char last_key;
     field boolean first_start;
@@ -28,17 +32,21 @@ class Game {
     field int seed;
 
     function void init() {
-        let delay = 4;
+        let word_width = 1;
+        let delay_init = 4;
+        let score_per_level = 10;
         let y_upper_margin = 42;
         return;
     }
 
     constructor Game new() {
-        do Score.init();
+        do Score.init(word_width);
+        do Level.init(word_width);
         do Player.init(y_upper_margin);
         do Obstacle.init(y_upper_margin);
 
         let score = Score.new();
+        let level = Level.new();
         let player = Player.new();
         // Player data
         let player_x1 = player.x1();
@@ -50,6 +58,7 @@ class Game {
         let obs1 = Obstacle.new(512);
         let obs2 = Obstacle.new(512 + 256);
 
+        let delay = delay_init;
         let key = 0;
         let last_key = 0;
         let first_start = false;
@@ -103,26 +112,28 @@ class Game {
         do Screen.setColor(true);
         do Screen.drawRectangle(0, y_upper_margin - 2, 511, y_upper_margin - 1);
         do Score.printSCORE();
+        do score.show();
+        do Level.printLEVEL();
+        do level.show();
         return;
     }
 
     method void draw_gameover() {
-        var int mem_offset, width;
+        var int mem_offset;
         do Screen.setColor(true);
         do Screen.drawRectangle(11*16, 108, 21*16, 108 + 40);
         do Screen.setColor(false);
         do Screen.drawRectangle(11*16 + 4, 108 + 4, 21*16 - 4, 108 + 40 - 4);
 
         let mem_offset = 12 + (117 * 32);
-        let width = 1;
         do DrawWord.draw_g(mem_offset);
-        do DrawWord.draw_a(width + mem_offset);
-        do DrawWord.draw_m(width * 2 + mem_offset);
-        do DrawWord.draw_e(width * 3 + mem_offset);
-        do DrawWord.draw_o(width * 4 + mem_offset);
-        do DrawWord.draw_v(width * 5 + mem_offset);
-        do DrawWord.draw_e(width * 6 + mem_offset);
-        do DrawWord.draw_r(width * 7 + mem_offset);
+        do DrawWord.draw_a(word_width + mem_offset);
+        do DrawWord.draw_m(word_width * 2 + mem_offset);
+        do DrawWord.draw_e(word_width * 3 + mem_offset);
+        do DrawWord.draw_o(word_width * 4 + mem_offset);
+        do DrawWord.draw_v(word_width * 5 + mem_offset);
+        do DrawWord.draw_e(word_width * 6 + mem_offset);
+        do DrawWord.draw_r(word_width * 7 + mem_offset);
 
         do Output.moveCursor(14,21);
         do Output.printString("Press SPACE to restart!");
@@ -130,7 +141,6 @@ class Game {
     }
 
     method void update() {
-        do score.show();
         do player.update();
         let player_y1 = player.y1();
         let player_y2 = player.y2();
@@ -147,6 +157,12 @@ class Game {
             do player.setVal(Gate.output());
             if (~player_value & player.value()) {
                 do score.increment();
+                // Level up
+                if(~(delay = 0) & (LCGRandom.mod(score.getScore(), score_per_level) = 0)) {
+                    let delay = delay - 1;
+                    do level.increment();
+                    do Obstacle.increNull();
+                }
             }
             let player_value = player.value();
         }}
@@ -189,15 +205,18 @@ class Game {
     }
 
     method void reset() {
+        let delay = delay_init;    
         let start = true;
         let pause = false;
         do Screen.clearScreen();
-        do draw_upper();
 
         do score.reset();
+        do level.reset();
         do player.reset();
         do obs1.reset();
         do obs2.reset();
+
+        do draw_upper();
 
         return;
     }

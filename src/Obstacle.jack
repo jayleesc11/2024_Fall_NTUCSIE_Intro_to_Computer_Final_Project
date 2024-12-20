@@ -13,6 +13,12 @@ class Obstacle {
     static int y1_gate2;            // (Initial) y1 position of gate2
     static int y1_gate3;            // (Initial) y1 position of gate3
 
+    static int random_range_init;   // Initial range for random number generation
+    static int increment_null;      // Increment for random number generation
+
+    // Static
+    static int random_range;         // Range for random number generation
+
     // Fields
     field int x1;                   // x1 position on screen
     field int x1_init;              // Initial x1 position on screen (constant)
@@ -20,6 +26,7 @@ class Obstacle {
     field Gate gate1;               // Gate 1
     field Gate gate2;               // Gate 2
     field Gate gate3;               // Gate 3
+    
 
     function void init(int y_upper_margin) {
         var int x_width_mem, y_blk_height, y_blk_interval, y_gate_halfinter;
@@ -41,6 +48,9 @@ class Obstacle {
         let y1_gate2 = y2_blk1 + 1 + y_gate_halfinter;
         let y1_gate3 = y2_blk2 + 1 + y_gate_halfinter;
 
+        let random_range_init = 6;
+        let increment_null = 2;
+
         do Gate.init(x_width_mem, x_width, y_gate_height, x_vel, y_gate_halfinter);
         return;
     }
@@ -52,25 +62,35 @@ class Obstacle {
         let gate1 = Gate.new(y1_gate1, y1_gate1 + y_gate_height - 1);
         let gate2 = Gate.new(y1_gate2, y1_gate2 + y_gate_height - 1);
         let gate3 = Gate.new(y1_gate3, y1_gate3 + y_gate_height - 1);
+        let random_range = random_range_init;
         return this;
     }
 
-    method void reset() {
+    method void gate_reset() {
         var int type1, type2, type3, same_choice;
-        let type1 = LCGRandom.randRange(0,6);
-        let type2 = LCGRandom.randRange(0,6);
-        let type3 = LCGRandom.randRange(0,6);
+        let type1 = LCGRandom.randRange(0,random_range);
+        let type2 = LCGRandom.randRange(0,random_range);
+        let type3 = LCGRandom.randRange(0,random_range);
+        if (type1 > 6) { let type1 = 0; }
+        if (type2 > 6) { let type2 = 0; }
+        if (type3 > 6) { let type3 = 0; }
         if ((type1 = 0) & (type2 = 0) & (type3 = 0)) {
             let same_choice = LCGRandom.randRange(1,3);
             if (same_choice = 1) { let type1 = LCGRandom.randRange(1,6); } else {
             if (same_choice = 2) { let type2 = LCGRandom.randRange(1,6); } else {
             let type3 = LCGRandom.randRange(1,6); }}
         }
-        let x1 = x1_init;
-        let exists = false;
         do gate1.reset(type1);
         do gate2.reset(type2);
         do gate3.reset(type3);
+        return;
+    }
+
+    method void reset() {
+        let x1 = x1_init;
+        let exists = false;
+        let random_range = random_range_init;
+        do gate_reset();
         return;
     }
 
@@ -81,8 +101,9 @@ class Obstacle {
         do gate1.eraseGate();
         do gate2.eraseGate();
         do gate3.eraseGate();
-        do reset();
         let x1 = 512;
+        let exists = false;
+        do gate_reset();
         return;
     }
 
@@ -142,6 +163,11 @@ class Obstacle {
             do gate2.update(x1);
             do gate3.update(x1);
         }
+        return;
+    }
+
+    function void increNull() {
+        let random_range = random_range + increment_null;
         return;
     }
 }

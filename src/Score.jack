@@ -2,8 +2,8 @@ class Score {
     // Constants
     static int word_width;          // Width of a word
     static int double_word_width;   // Width of two words
-    static int number_mem_offset;   // Memory offset for numbers
     static int score_mem_offset;    // Memory offset for "SCORE"
+    static int number_mem_offset;   // Memory offset for numbers
 
     // Fields
     field int total;                // Total score
@@ -11,8 +11,8 @@ class Score {
     field int digit1;               // Tens digit
     field int digit0;               // Ones digit
 
-    function void init() {
-        let word_width = 1;
+    function void init(int width) {
+        let word_width = width;
         let double_word_width = word_width + word_width;
         let score_mem_offset = 1 + (8 * 32);
         let number_mem_offset = word_width * 6 + score_mem_offset;
@@ -57,7 +57,7 @@ class Score {
         if (v = 6) { do DrawWord.draw_6(number_mem_offset + shift_x); } else { 
         if (v = 7) { do DrawWord.draw_7(number_mem_offset + shift_x); } else { 
         if (v = 8) { do DrawWord.draw_8(number_mem_offset + shift_x); } else { 
-        if (v = 9) { do DrawWord.draw_9(number_mem_offset + shift_x); }}}}}}}}}}
+        do DrawWord.draw_9(number_mem_offset + shift_x); }}}}}}}}}
         return;
     }
 
@@ -85,6 +85,9 @@ class Score {
                 let digit2 = digit2 + 1;
             }
         }
+        do show();
         return;
     }
+
+    method int getScore() { return total; }
 }
