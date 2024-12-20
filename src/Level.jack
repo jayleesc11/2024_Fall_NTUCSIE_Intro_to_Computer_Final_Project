@@ -17,7 +17,7 @@ class Level {
     function void printLEVEL() {
         //do DrawWord.draw_l(level_mem_offset);
         do DrawWord.draw_e(word_width + level_mem_offset);
-        //do DrawWord.draw_v(word_width * 2 + level_mem_offset);
+        do DrawWord.draw_v(word_width * 2 + level_mem_offset);
         do DrawWord.draw_e(word_width * 3 + level_mem_offset);
         //do DrawWord.draw_l(word_width * 4 + level_mem_offset);
         do DrawWord.draw_z(word_width * 5 + level_mem_offset);

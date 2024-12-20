@@ -81,15 +81,15 @@ class Player {
     method void update() {
         if (value) {
             if (skin) {
-                do SpriteManager.draw_player1_1(mem_pos);
+                do DrawOther.draw_player1_1(mem_pos);
             } else {
-                do SpriteManager.draw_player1_0(mem_pos);
+                do DrawOther.draw_player1_0(mem_pos);
             }
         } else {
             if (skin) {
-                do SpriteManager.draw_player0_1(mem_pos);
+                do DrawOther.draw_player0_1(mem_pos);
             } else {
-                do SpriteManager.draw_player0_0(mem_pos);
+                do DrawOther.draw_player0_0(mem_pos);
             }
         }
 

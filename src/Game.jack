@@ -95,16 +95,89 @@ class Game {
             let pause = ~pause;
         } else {
             if (~pause) {
-                if (key = 131) { // up arrow
+                if (key = 131) { // up bigarrow
                     do player.move(true);
                 } else {
-                    if (key = 133) { // down arrow
+                    if (key = 133) { // down bigarrow
                         do player.move(false);
                     }
                 }
             }
         }
         let last_key = key;
+        return;
+    }
+
+    method void draw_game_start() {
+        do DrawOther.draw_player0_0(4 + (126 * 32));
+        do DrawGate.draw_nor_16(0 + (10 * 32));
+        do DrawGate.draw_and_16(23 + (80 * 32));
+        do DrawGate.draw_xnor_16(25 + (200 * 32));
+        do Output.moveCursor(15,16);
+        do Output.printString("Press Enter to see the gameplay.");
+        do Output.moveCursor(17,16);
+        do Output.printString("Press SPACE to start the game!");
+        return;
+    }
+
+    method void draw_game_instruction() {
+        var int offset1, offset2, offset3, offset4, offset5;
+        do Screen.clearScreen();
+        let offset1 = 11 + (8 * 32);
+        do DrawWord.draw_g(offset1);
+        do DrawWord.draw_a(word_width + offset1);
+        do DrawWord.draw_m(word_width * 2 + offset1);
+        do DrawWord.draw_e(word_width * 3 + offset1);
+        //do DrawWord.draw_p(word_width * 4 + offset1);
+        //do DrawWord.draw_l(word_width * 5 + offset1);
+        do DrawWord.draw_a(word_width * 6 + offset1);
+        //do DrawWord.draw_y(word_width * 7 + offset1);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(170, 35, 310, 36);
+        let offset2 = 2 + (52 * 32);
+        do DrawOther.draw_player0_0(offset2);
+        do DrawGate.draw_xor_16(offset2 + 3);
+        do DrawInput.draw_in1_12(offset2 + 3 + 255);
+        do DrawOther.draw_bigarrow(offset2 + 10 + (14 * 32));
+        do DrawOther.draw_player1_0(offset2 + 13);
+        let offset3 = offset2 + 13 + 3;
+        do DrawWord.draw_s(offset3);
+        do DrawWord.draw_c(word_width + offset3);
+        do DrawWord.draw_o(word_width * 2 + offset3);
+        do DrawWord.draw_r(word_width * 3 + offset3);
+        do DrawWord.draw_e(word_width * 4 + offset3);
+        do DrawWord.draw_z(word_width * 5 + offset3);
+        do DrawWord.draw_9(word_width * 6 + offset3);
+        do DrawOther.draw_smallarrow(offset3 + (word_width * 8) + (6 * 32));
+        do DrawWord.draw_1(word_width * 10 + offset3);
+        do DrawWord.draw_0(word_width * 11 + offset3);
+        let offset4 = offset3 + (40 * 32);
+        //do DrawWord.draw_l(offset4);
+        do DrawWord.draw_e(word_width + offset4);
+        do DrawWord.draw_v(word_width * 2 + offset4);
+        do DrawWord.draw_e(word_width * 3 + offset4);
+        //do DrawWord.draw_l(word_width * 4 + offset4);
+        do DrawWord.draw_z(word_width * 5 + offset4);
+        do DrawWord.draw_0(word_width * 6 + offset4);
+        do DrawOther.draw_smallarrow(offset4 + (word_width * 8) + (6 * 32));
+        do DrawWord.draw_1(word_width * 10 + offset4);
+        let offset5 = offset2 + 1 + (110 * 32);
+        do DrawOther.draw_upkey(offset5 + (20 * 32));
+        do DrawOther.draw_player0_0(offset5 + 4);
+        do Screen.drawRectangle(140, 175, 210, 215);
+        do DrawOther.draw_space(offset5 + 19 + (8 * 32));
+        do Output.moveCursor(10,5);
+        do Output.printString("Gates change player's value.");
+        do Output.moveCursor(12,5);
+        do Output.printString("Score + 1 @ positive edge.");
+        do Output.moveCursor(12,36);
+        do Output.printString("Score 10 level up! Harder!");
+        do Output.moveCursor(21,3);
+        do Output.printString("Press UP/DOWN, avoid obstacles!");
+        do Output.moveCursor(19,42);
+        do Output.printString("Press SPACE to");
+        do Output.moveCursor(21,39);
+        do Output.printString("Start/Pause/Restart!");
         return;
     }
 
@@ -171,12 +244,17 @@ class Game {
 
     method boolean run() {
         // first start
+        if (~first_start) { do draw_game_start(); }
         while(~first_start) {
             let seed = seed + 1;
             if (seed < 0) {
                 let seed = 0;
             }
+            if(Keyboard.keyPressed() = 128) {   // Enter
+                do draw_game_instruction();
+            }
             if (whitespace()) {
+                do Screen.clearScreen();
                 do LCGRandom.setSeed(seed);
                 let first_start = true;
                 let start = true;
