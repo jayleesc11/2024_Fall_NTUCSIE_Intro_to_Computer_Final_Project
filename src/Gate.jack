@@ -89,6 +89,8 @@ class Gate {
             }
             // else
             if (sprite_seq = 1) {
+				if (~(input_rand)) { do DrawInput.draw_in0_14(mem_pos+256); } else {
+                if (input_rand) { do DrawInput.draw_in1_14(mem_pos+256); }}
                 if (type = 1) { do DrawGate.draw_and_2(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_2(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_2(mem_pos);   } else {
@@ -97,6 +99,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_2(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 2) {
+				if (~(input_rand)) { do DrawInput.draw_in0_16(mem_pos+256); } else {
+                if (input_rand) { do DrawInput.draw_in1_16(mem_pos+256); }}
                 if (type = 1) { do DrawGate.draw_and_4(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_4(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_4(mem_pos);   } else {
@@ -105,6 +109,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_4(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 3) {
+				if (~(input_rand)) { do DrawInput.draw_in0_2(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_2(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_6(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_6(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_6(mem_pos);   } else {
@@ -113,6 +119,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_6(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 4) {
+				if (~(input_rand)) { do DrawInput.draw_in0_4(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_4(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_8(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_8(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_8(mem_pos);   } else {
@@ -121,6 +129,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_8(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 5) {
+				if (~(input_rand)) { do DrawInput.draw_in0_6(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_6(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_10(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_10(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_10(mem_pos);   } else {
@@ -129,6 +139,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_10(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 6) {
+				if (~(input_rand)) { do DrawInput.draw_in0_8(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_8(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_12(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_12(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_12(mem_pos);   } else {
@@ -137,6 +149,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_12(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 7) {
+				if (~(input_rand)) { do DrawInput.draw_in0_10(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_10(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_14(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_14(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_14(mem_pos);   } else {
@@ -145,6 +159,8 @@ class Gate {
                 if (type = 6) { do DrawGate.draw_xnor_14(mem_pos); } }}}}}
             } else {
             if (sprite_seq = 8) {
+				if (~(input_rand)) { do DrawInput.draw_in0_12(mem_pos+255); } else {
+                if (input_rand) { do DrawInput.draw_in1_12(mem_pos+255); }}
                 if (type = 1) { do DrawGate.draw_and_16(mem_pos);  } else {
                 if (type = 2) { do DrawGate.draw_nand_16(mem_pos); } else {
                 if (type = 3) { do DrawGate.draw_or_16(mem_pos);   } else {
