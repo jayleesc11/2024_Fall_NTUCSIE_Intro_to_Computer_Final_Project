@@ -335,6 +335,34 @@ class DrawWord {
 		do Memory.poke(memAddress+704, 16128);
 		return;
 	}
+	function void draw_d(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 1022);
+		do Memory.poke(memAddress+64, 4094);
+		do Memory.poke(memAddress+96, 8190);
+		do Memory.poke(memAddress+128, 16382);
+		do Memory.poke(memAddress+160, 31774);
+		do Memory.poke(memAddress+192, 30750);
+		do Memory.poke(memAddress+224, -4066);
+		do Memory.poke(memAddress+256, -4066);
+		do Memory.poke(memAddress+288, -4066);
+		do Memory.poke(memAddress+320, -4066);
+		do Memory.poke(memAddress+352, -4066);
+		do Memory.poke(memAddress+384, -4066);
+		do Memory.poke(memAddress+416, -4066);
+		do Memory.poke(memAddress+448, -4066);
+		do Memory.poke(memAddress+480, -4066);
+		do Memory.poke(memAddress+512, -2018);
+		do Memory.poke(memAddress+544, 30750);
+		do Memory.poke(memAddress+576, 32286);
+		do Memory.poke(memAddress+608, 16382);
+		do Memory.poke(memAddress+640, 8190);
+		do Memory.poke(memAddress+672, 2046);
+		do Memory.poke(memAddress+704, 126);
+		return;
+	}
 	function void draw_e(int location) {
 		var int memAddress;
 		let memAddress = 16384+location;
@@ -389,6 +417,34 @@ class DrawWord {
 		do Memory.poke(memAddress+640, -16);
 		do Memory.poke(memAddress+672, -32);
 		do Memory.poke(memAddress+704, 16128);
+		return;
+	}
+	function void draw_h(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 30750);
+		do Memory.poke(memAddress+64, 30750);
+		do Memory.poke(memAddress+96, 30750);
+		do Memory.poke(memAddress+128, 30750);
+		do Memory.poke(memAddress+160, 30750);
+		do Memory.poke(memAddress+192, 30750);
+		do Memory.poke(memAddress+224, 30750);
+		do Memory.poke(memAddress+256, 30750);
+		do Memory.poke(memAddress+288, 30750);
+		do Memory.poke(memAddress+320, 32766);
+		do Memory.poke(memAddress+352, 32766);
+		do Memory.poke(memAddress+384, 32766);
+		do Memory.poke(memAddress+416, 32766);
+		do Memory.poke(memAddress+448, 30750);
+		do Memory.poke(memAddress+480, 30750);
+		do Memory.poke(memAddress+512, 30750);
+		do Memory.poke(memAddress+544, 30750);
+		do Memory.poke(memAddress+576, 30750);
+		do Memory.poke(memAddress+608, 30750);
+		do Memory.poke(memAddress+640, 30750);
+		do Memory.poke(memAddress+672, 30750);
+		do Memory.poke(memAddress+704, 28686);
 		return;
 	}
 	function void draw_l(int location) {
@@ -557,6 +613,34 @@ class DrawWord {
 		do Memory.poke(memAddress+640, 16382);
 		do Memory.poke(memAddress+672, 8190);
 		do Memory.poke(memAddress+704, 2032);
+		return;
+	}
+	function void draw_t(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, -2);
+		do Memory.poke(memAddress+64, -2);
+		do Memory.poke(memAddress+96, -2);
+		do Memory.poke(memAddress+128, 1920);
+		do Memory.poke(memAddress+160, 1920);
+		do Memory.poke(memAddress+192, 1920);
+		do Memory.poke(memAddress+224, 1920);
+		do Memory.poke(memAddress+256, 1920);
+		do Memory.poke(memAddress+288, 1920);
+		do Memory.poke(memAddress+320, 1920);
+		do Memory.poke(memAddress+352, 1920);
+		do Memory.poke(memAddress+384, 1920);
+		do Memory.poke(memAddress+416, 1920);
+		do Memory.poke(memAddress+448, 1920);
+		do Memory.poke(memAddress+480, 1920);
+		do Memory.poke(memAddress+512, 1920);
+		do Memory.poke(memAddress+544, 1920);
+		do Memory.poke(memAddress+576, 1920);
+		do Memory.poke(memAddress+608, 1920);
+		do Memory.poke(memAddress+640, 1920);
+		do Memory.poke(memAddress+672, 1920);
+		do Memory.poke(memAddress+704, 896);
 		return;
 	}
 	function void draw_v(int location) {
