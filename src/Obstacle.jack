@@ -150,7 +150,7 @@ class Obstacle {
             }
         }
         if (exists) {
-            if (current_obs_amount = 1) { do Sys.wait(5); }
+            if (current_obs_amount = 1) { do Sys.wait(7); }
             // New frame
             do Screen.setColor(true);
             do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk1, Math.min(Math.max(x1 + x_vel,0),511), y2_blk1);

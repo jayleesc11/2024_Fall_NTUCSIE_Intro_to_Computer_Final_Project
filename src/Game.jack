@@ -105,13 +105,32 @@ class Game {
     }
 
     method void draw_game_start() {
+        var int offset;
+        let offset = 10 + (95 * 32);
+        do DrawWord.draw_g(offset);
+        do DrawWord.draw_a(word_width + offset);
+        do DrawWord.draw_t(word_width * 2 + offset);
+        do DrawWord.draw_e(word_width * 3 + offset);
+        do DrawWord.draw_d(word_width * 5 + offset);
+        do DrawWord.draw_a(word_width * 6 + offset);
+        do DrawWord.draw_s(word_width * 7 + offset);
+        do DrawWord.draw_h(word_width * 8 + offset);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(152, 125, 312, 127);
         do DrawOther.draw_player0_0(4 + (126 * 32));
+        do DrawOther.draw_player1_1(10 + (30 * 32));
         do DrawGate.draw_nor_16(0 + (10 * 32));
+        do DrawGate.draw_nand_16(6 + (200 * 32));
+        do DrawInput.draw_in0_12(6 + (200 * 32) + 255);
+        do DrawGate.draw_xor_16(18 + (20 * 32));
+        do DrawInput.draw_in1_12(18 + (20 * 32) + 255);
         do DrawGate.draw_and_16(23 + (80 * 32));
+        do DrawInput.draw_in0_12(23 + (80 * 32) + 255);
         do DrawGate.draw_xnor_16(25 + (200 * 32));
-        do Output.moveCursor(15,16);
+        do DrawInput.draw_in1_12(25 + (200 * 32) + 255);
+        do Output.moveCursor(13,14);
         do Output.printString("Press Enter to see the gameplay.");
-        do Output.moveCursor(17,16);
+        do Output.moveCursor(15,14);
         do Output.printString("Press SPACE to start the game!");
         do Output.moveCursor(0,0);
         return;
