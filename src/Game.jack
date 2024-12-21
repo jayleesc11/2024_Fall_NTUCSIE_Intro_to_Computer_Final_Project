@@ -30,7 +30,7 @@ class Game {
 
     function void init() {
         let word_width = 1;
-        let delay_init = 0;
+        let delay_init = 12;
         let score_per_level = 10;
         let y_upper_margin = 42;
         return;
@@ -251,7 +251,7 @@ class Game {
                 do score.increment();
                 // Level up
                 if(~(delay = 0) & (LCGRandom.mod(score.getScore(), score_per_level) = 0)) {
-                    let delay = delay - 1;
+                    let delay = delay - 4;
                     do level.increment();
                     do Obstacle.increNull();
                 }
