@@ -17,6 +17,7 @@ class Obstacle {
     static int increment_null;      // Increment for random number generation
 
     // Static
+    static int current_obs_amount;  // Current amount of obstacles
     static int random_range;         // Range for random number generation
 
     // Fields
@@ -63,6 +64,7 @@ class Obstacle {
         let gate2 = Gate.new(y1_gate2, y1_gate2 + y_gate_height - 1);
         let gate3 = Gate.new(y1_gate3, y1_gate3 + y_gate_height - 1);
         let random_range = random_range_init;
+        let current_obs_amount = 0;
         return this;
     }
 
@@ -90,19 +92,7 @@ class Obstacle {
         let x1 = x1_init;
         let exists = false;
         let random_range = random_range_init;
-        do gate_reset();
-        return;
-    }
-
-    method void rebuild() {
-        do Screen.setColor(false);
-        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk1, Math.min(Math.max(x1 + x_width,0),511), y2_blk1);
-        do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk2, Math.min(Math.max(x1 + x_width,0),511), y2_blk2);
-        do gate1.eraseGate();
-        do gate2.eraseGate();
-        do gate3.eraseGate();
-        let x1 = 512;
-        let exists = false;
+        let current_obs_amount = 0;
         do gate_reset();
         return;
     }
@@ -136,7 +126,16 @@ class Obstacle {
 
     method void update() {
         if (x1 = 0) {
-            do rebuild();
+            do Screen.setColor(false);
+            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk1, Math.min(Math.max(x1 + x_width,0),511), y2_blk1);
+            do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk2, Math.min(Math.max(x1 + x_width,0),511), y2_blk2);
+            do gate1.eraseGate();
+            do gate2.eraseGate();
+            do gate3.eraseGate();
+            do gate_reset();
+            let x1 = 512;
+            let exists = false;
+            let current_obs_amount = current_obs_amount - 1;
         } else {
             let x1 = x1 - x_vel;
             if (x1 = (512 - x_width)) {
@@ -147,9 +146,11 @@ class Obstacle {
                 do gate2.appearGate();
                 do gate3.appearGate();
                 let exists = true;
+                let current_obs_amount = current_obs_amount + 1;
             }
         }
-        if (exists) { 
+        if (exists) {
+            if (current_obs_amount = 1) { do Sys.wait(5); }
             // New frame
             do Screen.setColor(true);
             do Screen.drawRectangle(Math.min(Math.max(x1,0),511), y1_blk1, Math.min(Math.max(x1 + x_vel,0),511), y2_blk1);

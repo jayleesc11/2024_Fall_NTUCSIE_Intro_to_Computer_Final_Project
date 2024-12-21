@@ -28,12 +28,9 @@ class Game {
     field int player_y2;
     field boolean player_value;
 
-    // Random number seed
-    field int seed;
-
     function void init() {
         let word_width = 1;
-        let delay_init = 4;
+        let delay_init = 0;
         let score_per_level = 10;
         let y_upper_margin = 42;
         return;
@@ -65,7 +62,6 @@ class Game {
         let start = false;
         let pause = false;
         let obs_collision_state = 0;
-        let seed = 0;
         return this;
     }
 
@@ -117,13 +113,14 @@ class Game {
         do Output.printString("Press Enter to see the gameplay.");
         do Output.moveCursor(17,16);
         do Output.printString("Press SPACE to start the game!");
+        do Output.moveCursor(0,0);
         return;
     }
 
-    method void draw_game_instruction() {
+    method void draw_gameplay() {
         var int offset1, offset2, offset3, offset4, offset5;
         do Screen.clearScreen();
-        let offset1 = 11 + (8 * 32);
+        let offset1 = 12 + (8 * 32);
         do DrawWord.draw_g(offset1);
         do DrawWord.draw_a(word_width + offset1);
         do DrawWord.draw_m(word_width * 2 + offset1);
@@ -133,14 +130,15 @@ class Game {
         do DrawWord.draw_a(word_width * 6 + offset1);
         do DrawWord.draw_y(word_width * 7 + offset1);
         do Screen.setColor(true);
-        do Screen.drawRectangle(170, 35, 310, 36);
+        do Screen.drawRectangle(184, 35, 328, 36);
+        //do Screen.drawRectangle(0, 38, 511, 39);
         let offset2 = 2 + (52 * 32);
         do DrawOther.draw_player0_0(offset2);
         do DrawGate.draw_xor_16(offset2 + 3);
         do DrawInput.draw_in1_12(offset2 + 3 + 255);
         do DrawOther.draw_bigarrow(offset2 + 10 + (14 * 32));
         do DrawOther.draw_player1_0(offset2 + 13);
-        let offset3 = offset2 + 13 + 3;
+        let offset3 = offset2 + 13 + 3 + (5 * 32);
         do DrawWord.draw_s(offset3);
         do DrawWord.draw_c(word_width + offset3);
         do DrawWord.draw_o(word_width * 2 + offset3);
@@ -151,7 +149,7 @@ class Game {
         do DrawOther.draw_smallarrow(offset3 + (word_width * 8) + (6 * 32));
         do DrawWord.draw_1(word_width * 10 + offset3);
         do DrawWord.draw_0(word_width * 11 + offset3);
-        let offset4 = offset3 + (40 * 32);
+        let offset4 = offset3 + (35 * 32);
         do DrawWord.draw_l(offset4);
         do DrawWord.draw_e(word_width + offset4);
         do DrawWord.draw_v(word_width * 2 + offset4);
@@ -166,11 +164,11 @@ class Game {
         do DrawOther.draw_player0_0(offset5 + 4);
         do Screen.drawRectangle(140, 175, 210, 215);
         do DrawOther.draw_space(offset5 + 19 + (8 * 32));
-        do Output.moveCursor(10,5);
+        do Output.moveCursor(10,4);
         do Output.printString("Gates change player's value.");
-        do Output.moveCursor(12,5);
+        do Output.moveCursor(12,4);
         do Output.printString("Score + 1 @ positive edge.");
-        do Output.moveCursor(12,36);
+        do Output.moveCursor(12,35);
         do Output.printString("Score 10 level up! Harder!");
         do Output.moveCursor(21,3);
         do Output.printString("Press UP/DOWN, avoid obstacles!");
@@ -178,6 +176,7 @@ class Game {
         do Output.printString("Press SPACE to");
         do Output.moveCursor(21,39);
         do Output.printString("Start/Pause/Restart!");
+        do Output.moveCursor(0,0);
         return;
     }
 
@@ -210,6 +209,7 @@ class Game {
 
         do Output.moveCursor(14,21);
         do Output.printString("Press SPACE to restart!");
+        do Output.moveCursor(0,0);
         return;
     }
 
@@ -244,14 +244,21 @@ class Game {
 
     method boolean run() {
         // first start
-        if (~first_start) { do draw_game_start(); }
+        var int seed;
+        var boolean gameplay_drawn;
+        if (~first_start) {
+            do draw_game_start(); 
+            let seed = 0;
+            let gameplay_drawn = false;
+        }
         while(~first_start) {
             let seed = seed + 1;
             if (seed < 0) {
                 let seed = 0;
             }
-            if(Keyboard.keyPressed() = 128) {   // Enter
-                do draw_game_instruction();
+            if(~gameplay_drawn & (Keyboard.keyPressed() = 128)) {   // Enter
+                do draw_gameplay();
+                let gameplay_drawn = true;
             }
             if (whitespace()) {
                 do Screen.clearScreen();
