@@ -1,26 +1,28 @@
 class Gate {
     // Constants
-    static int x1_init_mem;        // Initial x1 position in memory
-    static int x_width_mem;         // Width of gates in memory
-    static int x_width;             // Width of gates
-    static int y_height;            // Height of gates
-    static int x_vel;               // Movement speed on screen
-    static int y_gate_halfinter;    // Half interval between gates
+    static int x1_init_mem;             // Initial x1 position in memory
+    static int x_width_mem;             // Width of gates in memory
+    static int x_width;                 // Width of gates
+    static int y_height;                // Height of gates
+    static int x_vel;                   // Movement speed on screen
+    static int y_gate_halfinter;        // Half interval between gates
+    static int null_gate_delay_init;    // Initial delay for null gate
 
     // Static
-    static boolean output;           // Gate output
+    static boolean output;              // Gate output
+    static int null_gate_delay;         // Delay for null gate
 
     // Fields
-    field int y_lower_bound;        // Lower collision bound of the gate
-    field int y_upper_bound;        // Upper collision bound of the gate
-    field int mem_pos;              // Position in memory
-    field int mem_pos_init;         // Initial position in memory
-    field int sprite_seq;           // Sprite sequence
-    field int sprite_seq_init;      // Initial sprite sequence
+    field int y_lower_bound;            // Lower collision bound of the gate
+    field int y_upper_bound;            // Upper collision bound of the gate
+    field int mem_pos;                  // Position in memory
+    field int mem_pos_init;             // Initial position in memory
+    field int sprite_seq;               // Sprite sequence
+    field int sprite_seq_init;          // Initial sprite sequence
 
-    field boolean exists;           // Gate exists
-    field int type;                 // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
-    field boolean input_rand;       // Input 2
+    field boolean exists;               // Gate exists
+    field int type;                     // Gate type {0:NULL, 1:AND, 2:NAND, 3:OR, 4:NOR, 5:XOR, 6:XNOR}
+    field boolean input_rand;           // Input 2
 
     function void init(int width_mem, int width, int height, int vel, int inter) {
         let x1_init_mem = 25;
@@ -29,6 +31,7 @@ class Gate {
         let y_height = height;
         let x_vel = vel;
         let y_gate_halfinter = inter;
+        let null_gate_delay_init = 3;
         return;
     }
 
@@ -40,6 +43,7 @@ class Gate {
         let sprite_seq_init = 2;
         let sprite_seq = sprite_seq_init;
         let exists = false;
+        let null_gate_delay = null_gate_delay_init;
         return this;
     }
 
@@ -86,7 +90,7 @@ class Gate {
                 do Screen.setColor(false);
                 do Screen.drawRectangle(Math.min(Math.max(x1 + x_width,0),511), y_lower_bound, Math.min(Math.max(x1 + x_width + x_vel,0),511), y_upper_bound);
                 // For balancing the speed of null gates
-                do Sys.wait(3);
+                do Sys.wait(null_gate_delay);
                 return;
             }
             // else
@@ -220,4 +224,8 @@ class Gate {
     }
 
     function boolean output() { return output; }
+    function void setFinalLevel() {
+        let null_gate_delay = 0;
+        return;
+    }
 }

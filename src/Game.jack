@@ -1,9 +1,11 @@
 class Game {
     // Constants
     static int word_width;
-    static int delay_init;
-    static int score_per_level;
     static int y_upper_margin;
+    static int delay_init;
+    static int delay_dec_per_level;
+    static int score_per_level;
+    static int max_levelup_score;
 
     // Objects
     field Score score;
@@ -30,9 +32,11 @@ class Game {
 
     function void init() {
         let word_width = 1;
-        let delay_init = 12;
-        let score_per_level = 10;
         let y_upper_margin = 42;
+        let delay_init = 12;
+        let delay_dec_per_level = 4;
+        let score_per_level = 5;
+        let max_levelup_score = score_per_level * (delay_init / delay_dec_per_level + 1);
         return;
     }
 
@@ -164,10 +168,9 @@ class Game {
         do DrawWord.draw_r(word_width * 3 + offset3);
         do DrawWord.draw_e(word_width * 4 + offset3);
         do DrawWord.draw_z(word_width * 5 + offset3);
-        do DrawWord.draw_9(word_width * 6 + offset3);
+        do DrawWord.draw_4(word_width * 6 + offset3);
         do DrawOther.draw_smallarrow(offset3 + (word_width * 8) + (6 * 32));
-        do DrawWord.draw_1(word_width * 10 + offset3);
-        do DrawWord.draw_0(word_width * 11 + offset3);
+        do DrawWord.draw_5(word_width * 10 + offset3);
         let offset4 = offset3 + (35 * 32);
         do DrawWord.draw_l(offset4);
         do DrawWord.draw_e(word_width + offset4);
@@ -188,7 +191,7 @@ class Game {
         do Output.moveCursor(12,4);
         do Output.printString("Score + 1 @ positive edge.");
         do Output.moveCursor(12,35);
-        do Output.printString("Score 10 level up! Harder!");
+        do Output.printString("Score 5 level up! Harder!");
         do Output.moveCursor(21,3);
         do Output.printString("Press UP/DOWN, avoid obstacles!");
         do Output.moveCursor(19,42);
@@ -251,10 +254,14 @@ class Game {
                 do score.increment();
                 // Level up
                 if(~(delay = 0) & (LCGRandom.mod(score.getScore(), score_per_level) = 0)) {
-                    let delay = delay - 4;
+                    let delay = delay - delay_dec_per_level;
                     do level.increment();
                     do Obstacle.increNull();
-                }
+                } else {if ((delay = 0) & (score.getScore() = max_levelup_score)) {
+                    do level.increment();
+                    do Obstacle.setFinalLevel();
+                    do Gate.setFinalLevel();
+                }}
             }
             let player_value = player.value();
         }}
@@ -312,6 +319,7 @@ class Game {
         let delay = delay_init;    
         let start = true;
         let pause = false;
+        let player_value = false;
         do Screen.clearScreen();
 
         do score.reset();
