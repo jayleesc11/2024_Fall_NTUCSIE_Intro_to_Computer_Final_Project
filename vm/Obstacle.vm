@@ -1,0 +1,686 @@
+function Obstacle.init 4
+push constant 7
+pop local 0
+push constant 16
+push local 0
+call Math.multiply 2
+pop static 0
+push constant 2
+pop static 1
+push constant 2
+pop local 1
+push constant 50
+pop static 6
+push constant 256
+push argument 0
+sub
+push local 1
+push constant 2
+call Math.multiply 2
+sub
+push constant 3
+call Math.divide 2
+pop local 2
+push argument 0
+push local 2
+add
+pop static 2
+push static 2
+push local 1
+add
+push constant 1
+sub
+pop static 3
+push argument 0
+push local 2
+push constant 2
+call Math.multiply 2
+add
+push local 1
+add
+pop static 4
+push static 4
+push local 1
+add
+push constant 1
+sub
+pop static 5
+push constant 256
+push argument 0
+sub
+push local 1
+push constant 2
+call Math.multiply 2
+sub
+push static 6
+push constant 3
+call Math.multiply 2
+sub
+push constant 6
+call Math.divide 2
+pop local 3
+push argument 0
+push local 3
+add
+pop static 7
+push static 3
+push constant 1
+add
+push local 3
+add
+pop static 8
+push static 5
+push constant 1
+add
+push local 3
+add
+pop static 9
+push constant 6
+pop static 10
+push constant 2
+pop static 11
+push constant 9
+pop static 12
+push local 0
+push static 0
+push static 6
+push static 1
+push local 3
+call Gate.init 5
+pop temp 0
+push constant 0
+return
+function Obstacle.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push this 1
+pop this 0
+push constant 0
+pop this 2
+push static 7
+push static 7
+push static 6
+add
+push constant 1
+sub
+call Gate.new 2
+pop this 3
+push static 8
+push static 8
+push static 6
+add
+push constant 1
+sub
+call Gate.new 2
+pop this 4
+push static 9
+push static 9
+push static 6
+add
+push constant 1
+sub
+call Gate.new 2
+pop this 5
+push constant 0
+pop static 13
+push static 10
+pop static 14
+push constant 0
+pop static 15
+push static 12
+pop static 16
+push pointer 0
+return
+function Obstacle.gate_reset 4
+push argument 0
+pop pointer 0
+push static 15
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 1
+push constant 3
+call LCGRandom.randRange 2
+pop local 3
+push local 3
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+goto IF_END1
+label IF_FALSE1
+push local 3
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 1
+push constant 0
+pop local 0
+push constant 0
+pop local 2
+goto IF_END2
+label IF_FALSE2
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 2
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+label IF_END2
+label IF_END1
+goto IF_END0
+label IF_FALSE0
+push constant 0
+push static 14
+call LCGRandom.randRange 2
+pop local 0
+push constant 0
+push static 14
+call LCGRandom.randRange 2
+pop local 1
+push constant 0
+push static 14
+call LCGRandom.randRange 2
+pop local 2
+push local 0
+push constant 6
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+pop local 0
+label IF_FALSE3
+push local 1
+push constant 6
+gt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+pop local 1
+label IF_FALSE4
+push local 2
+push constant 6
+gt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 0
+pop local 2
+label IF_FALSE5
+push local 0
+push constant 0
+eq
+push local 1
+push constant 0
+eq
+and
+push local 2
+push constant 0
+eq
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 1
+push constant 3
+call LCGRandom.randRange 2
+pop local 3
+push local 3
+push constant 1
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 0
+goto IF_END7
+label IF_FALSE7
+push local 3
+push constant 2
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 1
+goto IF_END8
+label IF_FALSE8
+push constant 1
+push constant 6
+call LCGRandom.randRange 2
+pop local 2
+label IF_END8
+label IF_END7
+label IF_FALSE6
+label IF_END0
+push this 3
+push local 0
+call Gate.reset 2
+pop temp 0
+push this 4
+push local 1
+call Gate.reset 2
+pop temp 0
+push this 5
+push local 2
+call Gate.reset 2
+pop temp 0
+push constant 0
+return
+function Obstacle.reset 0
+push argument 0
+pop pointer 0
+push this 1
+pop this 0
+push constant 0
+pop this 2
+push static 10
+pop static 14
+push constant 0
+pop static 13
+push constant 0
+pop static 15
+push static 12
+pop static 16
+push pointer 0
+call Obstacle.gate_reset 1
+pop temp 0
+push constant 0
+return
+function Obstacle.dispose 0
+push argument 0
+pop pointer 0
+push this 3
+call Gate.dispose 1
+pop temp 0
+push this 4
+call Gate.dispose 1
+pop temp 0
+push this 5
+call Gate.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Obstacle.collision 0
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+push static 0
+add
+lt
+push argument 3
+push this 0
+gt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 2
+push static 3
+lt
+push argument 4
+push static 2
+gt
+and
+push argument 2
+push static 5
+lt
+push argument 4
+push static 4
+gt
+and
+or
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+neg
+return
+label IF_FALSE1
+push argument 2
+push static 2
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 3
+push argument 5
+call Gate.collision 2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 1
+neg
+return
+goto IF_END3
+label IF_FALSE3
+push constant 1
+return
+label IF_END3
+goto IF_END2
+label IF_FALSE2
+push argument 2
+push static 4
+lt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 4
+push argument 5
+call Gate.collision 2
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 1
+neg
+return
+goto IF_END5
+label IF_FALSE5
+push constant 1
+return
+label IF_END5
+goto IF_END4
+label IF_FALSE4
+push this 5
+push argument 5
+call Gate.collision 2
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 1
+neg
+return
+goto IF_END6
+label IF_FALSE6
+push constant 1
+return
+label IF_END6
+label IF_END4
+label IF_END2
+label IF_FALSE0
+push constant 0
+return
+function Obstacle.update 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 2
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 3
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 4
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 5
+call Screen.drawRectangle 4
+pop temp 0
+push this 3
+call Gate.eraseGate 1
+pop temp 0
+push this 4
+call Gate.eraseGate 1
+pop temp 0
+push this 5
+call Gate.eraseGate 1
+pop temp 0
+push pointer 0
+call Obstacle.gate_reset 1
+pop temp 0
+push constant 512
+pop this 0
+push constant 0
+pop this 2
+push static 13
+push constant 1
+sub
+pop static 13
+goto IF_END0
+label IF_FALSE0
+push this 0
+push static 1
+sub
+pop this 0
+push this 0
+push constant 512
+push static 0
+sub
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 2
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 3
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 4
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 5
+call Screen.drawRectangle 4
+pop temp 0
+push this 3
+call Gate.appearGate 1
+pop temp 0
+push this 4
+call Gate.appearGate 1
+pop temp 0
+push this 5
+call Gate.appearGate 1
+pop temp 0
+push constant 0
+not
+pop this 2
+push static 13
+push constant 1
+add
+pop static 13
+label IF_FALSE1
+label IF_END0
+push this 2
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push static 13
+push constant 1
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push static 16
+call Sys.wait 1
+pop temp 0
+label IF_FALSE3
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 2
+push this 0
+push static 1
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 3
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 4
+push this 0
+push static 1
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 5
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 2
+push this 0
+push static 0
+add
+push static 1
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 3
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push static 0
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 4
+push this 0
+push static 0
+add
+push static 1
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push static 5
+call Screen.drawRectangle 4
+pop temp 0
+push this 3
+push this 0
+call Gate.update 2
+pop temp 0
+push this 4
+push this 0
+call Gate.update 2
+pop temp 0
+push this 5
+push this 0
+call Gate.update 2
+pop temp 0
+label IF_FALSE2
+push constant 0
+return
+function Obstacle.increNull 0
+push static 14
+push static 11
+add
+pop static 14
+push constant 0
+return
+function Obstacle.setFinalLevel 0
+push constant 0
+not
+pop static 15
+push constant 2
+pop static 16
+push constant 0
+return

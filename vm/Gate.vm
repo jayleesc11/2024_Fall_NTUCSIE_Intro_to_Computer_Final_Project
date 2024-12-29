@@ -1,0 +1,1272 @@
+function Gate.init 0
+push constant 25
+pop static 0
+push argument 0
+pop static 1
+push argument 1
+pop static 2
+push argument 2
+pop static 3
+push argument 3
+pop static 4
+push argument 4
+pop static 5
+push constant 3
+pop static 6
+push constant 0
+return
+function Gate.new 0
+push constant 9
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+push static 5
+sub
+pop this 0
+push argument 1
+push static 5
+add
+pop this 1
+push static 0
+push argument 0
+push constant 32
+call Math.multiply 2
+add
+pop this 3
+push this 3
+pop this 2
+push constant 2
+pop this 5
+push this 5
+pop this 4
+push constant 0
+pop this 6
+push static 6
+pop static 8
+push pointer 0
+return
+function Gate.reset 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 6
+push this 3
+pop this 2
+push this 5
+pop this 4
+push argument 1
+pop this 7
+push constant 0
+push constant 1
+call LCGRandom.randRange 2
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop this 8
+goto IF_END0
+label IF_FALSE0
+push constant 0
+not
+pop this 8
+label IF_END0
+push constant 0
+return
+function Gate.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Gate.collision 0
+push argument 0
+pop pointer 0
+push this 7
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push this 6
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+push argument 1
+call Gate.logic 2
+pop temp 0
+push pointer 0
+call Gate.eraseGate 1
+pop temp 0
+label IF_FALSE1
+push constant 0
+return
+function Gate.logic 0
+push argument 0
+pop pointer 0
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+push this 8
+and
+pop static 7
+goto IF_END0
+label IF_FALSE0
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 1
+push this 8
+and
+not
+pop static 7
+goto IF_END1
+label IF_FALSE1
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push argument 1
+push this 8
+or
+pop static 7
+goto IF_END2
+label IF_FALSE2
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push argument 1
+push this 8
+or
+not
+pop static 7
+goto IF_END3
+label IF_FALSE3
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push argument 1
+push this 8
+not
+and
+push argument 1
+not
+push this 8
+and
+or
+pop static 7
+goto IF_END4
+label IF_FALSE4
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push argument 1
+push this 8
+and
+push argument 1
+not
+push this 8
+not
+and
+or
+pop static 7
+goto IF_END5
+label IF_FALSE5
+push constant 0
+pop static 7
+label IF_END5
+label IF_END4
+label IF_END3
+label IF_END2
+label IF_END1
+label IF_END0
+push constant 0
+return
+function Gate.update 0
+push argument 0
+pop pointer 0
+push this 6
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 7
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push this 0
+push argument 1
+push static 4
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push this 1
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push static 2
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push this 0
+push argument 1
+push static 2
+add
+push static 4
+add
+push constant 0
+call Math.max 2
+push constant 511
+call Math.min 2
+push this 1
+call Screen.drawRectangle 4
+pop temp 0
+push static 8
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE1
+push this 4
+push constant 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 8
+not
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 2
+push constant 256
+add
+call DrawInput.draw_in0_14 1
+pop temp 0
+goto IF_END3
+label IF_FALSE3
+push this 8
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 2
+push constant 256
+add
+call DrawInput.draw_in1_14 1
+pop temp 0
+label IF_FALSE4
+label IF_END3
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 2
+call DrawGate.draw_and_2 1
+pop temp 0
+goto IF_END5
+label IF_FALSE5
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 2
+call DrawGate.draw_nand_2 1
+pop temp 0
+goto IF_END6
+label IF_FALSE6
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 2
+call DrawGate.draw_or_2 1
+pop temp 0
+goto IF_END7
+label IF_FALSE7
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 2
+call DrawGate.draw_nor_2 1
+pop temp 0
+goto IF_END8
+label IF_FALSE8
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 2
+call DrawGate.draw_xor_2 1
+pop temp 0
+goto IF_END9
+label IF_FALSE9
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 2
+call DrawGate.draw_xnor_2 1
+pop temp 0
+label IF_FALSE10
+label IF_END9
+label IF_END8
+label IF_END7
+label IF_END6
+label IF_END5
+goto IF_END2
+label IF_FALSE2
+push this 4
+push constant 2
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push this 8
+not
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push this 2
+push constant 256
+add
+call DrawInput.draw_in0_16 1
+pop temp 0
+goto IF_END12
+label IF_FALSE12
+push this 8
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push this 2
+push constant 256
+add
+call DrawInput.draw_in1_16 1
+pop temp 0
+label IF_FALSE13
+label IF_END12
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push this 2
+call DrawGate.draw_and_4 1
+pop temp 0
+goto IF_END14
+label IF_FALSE14
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push this 2
+call DrawGate.draw_nand_4 1
+pop temp 0
+goto IF_END15
+label IF_FALSE15
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push this 2
+call DrawGate.draw_or_4 1
+pop temp 0
+goto IF_END16
+label IF_FALSE16
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push this 2
+call DrawGate.draw_nor_4 1
+pop temp 0
+goto IF_END17
+label IF_FALSE17
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push this 2
+call DrawGate.draw_xor_4 1
+pop temp 0
+goto IF_END18
+label IF_FALSE18
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push this 2
+call DrawGate.draw_xnor_4 1
+pop temp 0
+label IF_FALSE19
+label IF_END18
+label IF_END17
+label IF_END16
+label IF_END15
+label IF_END14
+goto IF_END11
+label IF_FALSE11
+push this 4
+push constant 3
+eq
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push this 8
+not
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_2 1
+pop temp 0
+goto IF_END21
+label IF_FALSE21
+push this 8
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_2 1
+pop temp 0
+label IF_FALSE22
+label IF_END21
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push this 2
+call DrawGate.draw_and_6 1
+pop temp 0
+goto IF_END23
+label IF_FALSE23
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE24
+goto IF_FALSE24
+label IF_TRUE24
+push this 2
+call DrawGate.draw_nand_6 1
+pop temp 0
+goto IF_END24
+label IF_FALSE24
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE25
+goto IF_FALSE25
+label IF_TRUE25
+push this 2
+call DrawGate.draw_or_6 1
+pop temp 0
+goto IF_END25
+label IF_FALSE25
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE26
+goto IF_FALSE26
+label IF_TRUE26
+push this 2
+call DrawGate.draw_nor_6 1
+pop temp 0
+goto IF_END26
+label IF_FALSE26
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE27
+goto IF_FALSE27
+label IF_TRUE27
+push this 2
+call DrawGate.draw_xor_6 1
+pop temp 0
+goto IF_END27
+label IF_FALSE27
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE28
+goto IF_FALSE28
+label IF_TRUE28
+push this 2
+call DrawGate.draw_xnor_6 1
+pop temp 0
+label IF_FALSE28
+label IF_END27
+label IF_END26
+label IF_END25
+label IF_END24
+label IF_END23
+goto IF_END20
+label IF_FALSE20
+push this 4
+push constant 4
+eq
+if-goto IF_TRUE29
+goto IF_FALSE29
+label IF_TRUE29
+push this 8
+not
+if-goto IF_TRUE30
+goto IF_FALSE30
+label IF_TRUE30
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_4 1
+pop temp 0
+goto IF_END30
+label IF_FALSE30
+push this 8
+if-goto IF_TRUE31
+goto IF_FALSE31
+label IF_TRUE31
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_4 1
+pop temp 0
+label IF_FALSE31
+label IF_END30
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE32
+goto IF_FALSE32
+label IF_TRUE32
+push this 2
+call DrawGate.draw_and_8 1
+pop temp 0
+goto IF_END32
+label IF_FALSE32
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE33
+goto IF_FALSE33
+label IF_TRUE33
+push this 2
+call DrawGate.draw_nand_8 1
+pop temp 0
+goto IF_END33
+label IF_FALSE33
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE34
+goto IF_FALSE34
+label IF_TRUE34
+push this 2
+call DrawGate.draw_or_8 1
+pop temp 0
+goto IF_END34
+label IF_FALSE34
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE35
+goto IF_FALSE35
+label IF_TRUE35
+push this 2
+call DrawGate.draw_nor_8 1
+pop temp 0
+goto IF_END35
+label IF_FALSE35
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE36
+goto IF_FALSE36
+label IF_TRUE36
+push this 2
+call DrawGate.draw_xor_8 1
+pop temp 0
+goto IF_END36
+label IF_FALSE36
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE37
+goto IF_FALSE37
+label IF_TRUE37
+push this 2
+call DrawGate.draw_xnor_8 1
+pop temp 0
+label IF_FALSE37
+label IF_END36
+label IF_END35
+label IF_END34
+label IF_END33
+label IF_END32
+goto IF_END29
+label IF_FALSE29
+push this 4
+push constant 5
+eq
+if-goto IF_TRUE38
+goto IF_FALSE38
+label IF_TRUE38
+push this 8
+not
+if-goto IF_TRUE39
+goto IF_FALSE39
+label IF_TRUE39
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_6 1
+pop temp 0
+goto IF_END39
+label IF_FALSE39
+push this 8
+if-goto IF_TRUE40
+goto IF_FALSE40
+label IF_TRUE40
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_6 1
+pop temp 0
+label IF_FALSE40
+label IF_END39
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE41
+goto IF_FALSE41
+label IF_TRUE41
+push this 2
+call DrawGate.draw_and_10 1
+pop temp 0
+goto IF_END41
+label IF_FALSE41
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE42
+goto IF_FALSE42
+label IF_TRUE42
+push this 2
+call DrawGate.draw_nand_10 1
+pop temp 0
+goto IF_END42
+label IF_FALSE42
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE43
+goto IF_FALSE43
+label IF_TRUE43
+push this 2
+call DrawGate.draw_or_10 1
+pop temp 0
+goto IF_END43
+label IF_FALSE43
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE44
+goto IF_FALSE44
+label IF_TRUE44
+push this 2
+call DrawGate.draw_nor_10 1
+pop temp 0
+goto IF_END44
+label IF_FALSE44
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE45
+goto IF_FALSE45
+label IF_TRUE45
+push this 2
+call DrawGate.draw_xor_10 1
+pop temp 0
+goto IF_END45
+label IF_FALSE45
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE46
+goto IF_FALSE46
+label IF_TRUE46
+push this 2
+call DrawGate.draw_xnor_10 1
+pop temp 0
+label IF_FALSE46
+label IF_END45
+label IF_END44
+label IF_END43
+label IF_END42
+label IF_END41
+goto IF_END38
+label IF_FALSE38
+push this 4
+push constant 6
+eq
+if-goto IF_TRUE47
+goto IF_FALSE47
+label IF_TRUE47
+push this 8
+not
+if-goto IF_TRUE48
+goto IF_FALSE48
+label IF_TRUE48
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_8 1
+pop temp 0
+goto IF_END48
+label IF_FALSE48
+push this 8
+if-goto IF_TRUE49
+goto IF_FALSE49
+label IF_TRUE49
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_8 1
+pop temp 0
+label IF_FALSE49
+label IF_END48
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE50
+goto IF_FALSE50
+label IF_TRUE50
+push this 2
+call DrawGate.draw_and_12 1
+pop temp 0
+goto IF_END50
+label IF_FALSE50
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE51
+goto IF_FALSE51
+label IF_TRUE51
+push this 2
+call DrawGate.draw_nand_12 1
+pop temp 0
+goto IF_END51
+label IF_FALSE51
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE52
+goto IF_FALSE52
+label IF_TRUE52
+push this 2
+call DrawGate.draw_or_12 1
+pop temp 0
+goto IF_END52
+label IF_FALSE52
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE53
+goto IF_FALSE53
+label IF_TRUE53
+push this 2
+call DrawGate.draw_nor_12 1
+pop temp 0
+goto IF_END53
+label IF_FALSE53
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE54
+goto IF_FALSE54
+label IF_TRUE54
+push this 2
+call DrawGate.draw_xor_12 1
+pop temp 0
+goto IF_END54
+label IF_FALSE54
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE55
+goto IF_FALSE55
+label IF_TRUE55
+push this 2
+call DrawGate.draw_xnor_12 1
+pop temp 0
+label IF_FALSE55
+label IF_END54
+label IF_END53
+label IF_END52
+label IF_END51
+label IF_END50
+goto IF_END47
+label IF_FALSE47
+push this 4
+push constant 7
+eq
+if-goto IF_TRUE56
+goto IF_FALSE56
+label IF_TRUE56
+push this 8
+not
+if-goto IF_TRUE57
+goto IF_FALSE57
+label IF_TRUE57
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_10 1
+pop temp 0
+goto IF_END57
+label IF_FALSE57
+push this 8
+if-goto IF_TRUE58
+goto IF_FALSE58
+label IF_TRUE58
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_10 1
+pop temp 0
+label IF_FALSE58
+label IF_END57
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE59
+goto IF_FALSE59
+label IF_TRUE59
+push this 2
+call DrawGate.draw_and_14 1
+pop temp 0
+goto IF_END59
+label IF_FALSE59
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE60
+goto IF_FALSE60
+label IF_TRUE60
+push this 2
+call DrawGate.draw_nand_14 1
+pop temp 0
+goto IF_END60
+label IF_FALSE60
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE61
+goto IF_FALSE61
+label IF_TRUE61
+push this 2
+call DrawGate.draw_or_14 1
+pop temp 0
+goto IF_END61
+label IF_FALSE61
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE62
+goto IF_FALSE62
+label IF_TRUE62
+push this 2
+call DrawGate.draw_nor_14 1
+pop temp 0
+goto IF_END62
+label IF_FALSE62
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE63
+goto IF_FALSE63
+label IF_TRUE63
+push this 2
+call DrawGate.draw_xor_14 1
+pop temp 0
+goto IF_END63
+label IF_FALSE63
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE64
+goto IF_FALSE64
+label IF_TRUE64
+push this 2
+call DrawGate.draw_xnor_14 1
+pop temp 0
+label IF_FALSE64
+label IF_END63
+label IF_END62
+label IF_END61
+label IF_END60
+label IF_END59
+goto IF_END56
+label IF_FALSE56
+push this 4
+push constant 8
+eq
+if-goto IF_TRUE65
+goto IF_FALSE65
+label IF_TRUE65
+push this 8
+not
+if-goto IF_TRUE66
+goto IF_FALSE66
+label IF_TRUE66
+push this 2
+push constant 255
+add
+call DrawInput.draw_in0_12 1
+pop temp 0
+goto IF_END66
+label IF_FALSE66
+push this 8
+if-goto IF_TRUE67
+goto IF_FALSE67
+label IF_TRUE67
+push this 2
+push constant 255
+add
+call DrawInput.draw_in1_12 1
+pop temp 0
+label IF_FALSE67
+label IF_END66
+push this 7
+push constant 1
+eq
+if-goto IF_TRUE68
+goto IF_FALSE68
+label IF_TRUE68
+push this 2
+call DrawGate.draw_and_16 1
+pop temp 0
+goto IF_END68
+label IF_FALSE68
+push this 7
+push constant 2
+eq
+if-goto IF_TRUE69
+goto IF_FALSE69
+label IF_TRUE69
+push this 2
+call DrawGate.draw_nand_16 1
+pop temp 0
+goto IF_END69
+label IF_FALSE69
+push this 7
+push constant 3
+eq
+if-goto IF_TRUE70
+goto IF_FALSE70
+label IF_TRUE70
+push this 2
+call DrawGate.draw_or_16 1
+pop temp 0
+goto IF_END70
+label IF_FALSE70
+push this 7
+push constant 4
+eq
+if-goto IF_TRUE71
+goto IF_FALSE71
+label IF_TRUE71
+push this 2
+call DrawGate.draw_nor_16 1
+pop temp 0
+goto IF_END71
+label IF_FALSE71
+push this 7
+push constant 5
+eq
+if-goto IF_TRUE72
+goto IF_FALSE72
+label IF_TRUE72
+push this 2
+call DrawGate.draw_xor_16 1
+pop temp 0
+goto IF_END72
+label IF_FALSE72
+push this 7
+push constant 6
+eq
+if-goto IF_TRUE73
+goto IF_FALSE73
+label IF_TRUE73
+push this 2
+call DrawGate.draw_xnor_16 1
+pop temp 0
+label IF_FALSE73
+label IF_END72
+label IF_END71
+label IF_END70
+label IF_END69
+label IF_END68
+push constant 0
+pop this 4
+push this 2
+push constant 1
+sub
+pop this 2
+label IF_FALSE65
+label IF_END56
+label IF_END47
+label IF_END38
+label IF_END29
+label IF_END20
+label IF_END11
+label IF_END2
+push this 4
+push constant 1
+add
+pop this 4
+label IF_FALSE0
+push constant 0
+return
+function Gate.appearGate 3
+push argument 0
+pop pointer 0
+push this 7
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 16384
+push this 2
+add
+push static 5
+push constant 32
+call Math.multiply 2
+sub
+pop local 0
+push constant 16384
+push this 2
+add
+push static 3
+push constant 1
+sub
+push static 5
+add
+push constant 32
+call Math.multiply 2
+add
+push constant 1
+add
+pop local 1
+label WHILE_EXP0
+push local 0
+push local 1
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+label WHILE_EXP1
+push local 2
+push static 1
+lt
+not
+if-goto WHILE_END1
+push local 0
+push local 2
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 32
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push this 2
+push static 0
+sub
+pop this 2
+label IF_FALSE0
+push constant 0
+not
+pop this 6
+push constant 0
+return
+function Gate.eraseGate 3
+push argument 0
+pop pointer 0
+push this 6
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 7
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 16384
+push this 2
+add
+push static 5
+push constant 32
+call Math.multiply 2
+sub
+pop local 0
+push constant 16384
+push this 2
+add
+push static 3
+push constant 1
+sub
+push static 5
+add
+push constant 32
+call Math.multiply 2
+add
+push constant 1
+add
+pop local 1
+goto IF_END1
+label IF_FALSE1
+push constant 16384
+push this 2
+add
+pop local 0
+push constant 16384
+push this 2
+add
+push static 3
+push constant 1
+sub
+push constant 32
+call Math.multiply 2
+add
+push constant 1
+add
+pop local 1
+label IF_END1
+label WHILE_EXP0
+push local 0
+push local 1
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+label WHILE_EXP1
+push local 2
+push static 1
+lt
+not
+if-goto WHILE_END1
+push local 0
+push local 2
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 32
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+pop this 6
+label IF_FALSE0
+push constant 0
+return
+function Gate.output 0
+push static 7
+return
+function Gate.setFinalLevel 0
+push constant 0
+pop static 8
+push constant 0
+return

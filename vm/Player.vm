@@ -1,0 +1,215 @@
+function Player.init 2
+push constant 16
+pop local 0
+push constant 44
+pop static 1
+push constant 4
+pop local 1
+push constant 2
+pop static 7
+push constant 15
+pop static 11
+push local 1
+push constant 16
+call Math.multiply 2
+pop static 3
+push static 3
+push local 0
+add
+push constant 1
+sub
+pop static 4
+push argument 0
+push constant 1
+sub
+push constant 256
+push argument 0
+sub
+push static 1
+sub
+push constant 2
+call Math.divide 2
+add
+pop static 5
+push local 1
+push static 5
+push constant 32
+call Math.multiply 2
+add
+pop static 6
+push static 7
+push constant 32
+call Math.multiply 2
+pop static 8
+push argument 0
+pop static 9
+push constant 256
+push static 1
+sub
+pop static 10
+push constant 0
+return
+function Player.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+call Player.reset 1
+pop temp 0
+push pointer 0
+return
+function Player.reset 0
+push argument 0
+pop pointer 0
+push static 5
+pop this 0
+push static 6
+pop this 1
+push constant 0
+pop this 2
+push constant 0
+pop this 3
+push constant 0
+pop this 4
+push constant 0
+return
+function Player.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Player.move 0
+push argument 0
+pop pointer 0
+push argument 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push static 9
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+push static 7
+sub
+pop this 0
+push this 1
+push static 8
+sub
+pop this 1
+label IF_FALSE1
+goto IF_END0
+label IF_FALSE0
+push this 0
+push static 10
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 0
+push static 7
+add
+pop this 0
+push this 1
+push static 8
+add
+pop this 1
+label IF_FALSE2
+label IF_END0
+push constant 0
+return
+function Player.setVal 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 4
+push constant 0
+return
+function Player.update 0
+push argument 0
+pop pointer 0
+push this 4
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 1
+call DrawOther.draw_player1_1 1
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push this 1
+call DrawOther.draw_player1_0 1
+pop temp 0
+label IF_END1
+goto IF_END0
+label IF_FALSE0
+push this 3
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 1
+call DrawOther.draw_player0_1 1
+pop temp 0
+goto IF_END2
+label IF_FALSE2
+push this 1
+call DrawOther.draw_player0_0 1
+pop temp 0
+label IF_END2
+label IF_END0
+push this 2
+push constant 1
+add
+pop this 2
+push this 2
+push static 11
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+pop this 2
+push this 3
+not
+pop this 3
+label IF_FALSE3
+push constant 0
+return
+function Player.x1 0
+push argument 0
+pop pointer 0
+push static 3
+return
+function Player.y1 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Player.x2 0
+push argument 0
+pop pointer 0
+push static 4
+return
+function Player.y2 0
+push argument 0
+pop pointer 0
+push this 0
+push static 1
+add
+push constant 1
+sub
+return
+function Player.value 0
+push argument 0
+pop pointer 0
+push this 4
+return
